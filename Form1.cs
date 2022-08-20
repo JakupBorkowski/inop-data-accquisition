@@ -187,9 +187,6 @@ namespace USB_205_DataAccquisition
 
 
 
-            //'wyswietalnie tekstu'
-            label2.Text = CalculatedEncoderPosition.ToString();
-
             //Kazdorazowe zapisywanie do pliku tekstowego/csv jezeli WriteFlag jest aktywna, to znaczy jeżeli
             //wcisniety zostal przycisk zapisz do pliku tekstowego i wybrane zostalo docelowe miejsce zapisu danych
             if (WriteFlag)
