@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MindFusion.Charting.Components;
 using MindFusion.Charting.WinForms;
+using System.IO;
 
 namespace USB_205_DataAccquisition
 {
@@ -61,11 +62,15 @@ namespace USB_205_DataAccquisition
         //opis osi x
         double x;
 
+        //plik do zapisywania
+        StreamWriter write;
+        bool WriteFlag;
+        bool IsSaveButtonClicked;
 
         private void Form1_Load(object sender, EventArgs e)
         {
             timer1.Tick += timer1_Tick;
-            timer1.Interval = 10;
+            timer1.Interval = 100;
             button1.Text = "Start";
 
 
@@ -77,6 +82,11 @@ namespace USB_205_DataAccquisition
             //ustawianie zakresu dla secondary Y axis
             chart1.ChartAreas[0].AxisY2.Minimum = -10;
             chart1.ChartAreas[0].AxisY2.Maximum = 10;
+
+            timer1.Start();
+            button1.Text = "Stop";
+            WriteFlag = false;
+            IsSaveButtonClicked = false;
         }
 
         public Form1()
@@ -173,17 +183,49 @@ namespace USB_205_DataAccquisition
             //timer1.Interval może być zmieniony w zależności od preferencji użytkownika
             //trzeba jeszcze sprawdzić jaka jest predkość transmisji danych z urządzenia pomiarowego i 
             //na tej podstawie dobrac timer1.Interval
-            x += Math.Round((double)timer1.Interval/1000,2);
+            x += (double)timer1.Interval/1000;
 
 
 
             //'wyswietalnie tekstu'
             label2.Text = CalculatedEncoderPosition.ToString();
-            
 
+            //Kazdorazowe zapisywanie do pliku tekstowego/csv jezeli WriteFlag jest aktywna, to znaczy jeżeli
+            //wcisniety zostal przycisk zapisz do pliku tekstowego i wybrane zostalo docelowe miejsce zapisu danych
+            if (WriteFlag)
+            {
+                write.Write(RealValueOfAnalog0.ToString()+","+CalculatedEncoderPosition.ToString()+"\n");
+            }
 
         }
 
-        
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            if (IsSaveButtonClicked == false)
+            {
+                SaveFileDialog save = new SaveFileDialog();
+                save.Title = "Save File";
+                save.Filter = "Text Files (*txt)|*txt| All Files (*.*)|*.*";
+
+                if (save.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    write = new StreamWriter(File.Create(save.FileName));
+                    WriteFlag = true;
+                    write.Write("Położenie kątowe" + "," + "Ciśnienie" + "\n");
+                }
+                IsSaveButtonClicked = true;
+                btnSave.Text = "Zakończ zapisywanie danych";
+            }
+            else
+            {
+                IsSaveButtonClicked=false;
+                btnSave.Text = "Rozpocznij zapisywanie danych";
+                WriteFlag = false;
+
+                //zamkniecie pliku, do ktorego zapisywanie byly dane
+                write.Dispose();
+            }
+
+        }
     }
 }
