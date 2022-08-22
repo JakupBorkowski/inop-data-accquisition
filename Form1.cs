@@ -70,7 +70,7 @@ namespace USB_205_DataAccquisition
         private void Form1_Load(object sender, EventArgs e)
         {
             timer1.Tick += timer1_Tick;
-            timer1.Interval = 1;
+            timer1.Interval = 1000;
             button1.Text = "Start";
 
 
@@ -113,8 +113,7 @@ namespace USB_205_DataAccquisition
                 timer1.Start();
                 button1.Text = "Stop";
             }
-            Device device = new Device("jakub");
-            DbDevice.UpdateDevice(device,"3");
+            
                 
         }
 
@@ -172,7 +171,7 @@ namespace USB_205_DataAccquisition
             chart1.ChartAreas[0].AxisY2.Maximum = 10;
 
             //ustawianie nazwy dla primary osi Y
-            chart1.ChartAreas[0].AxisY.Title = "Położenie kątowe";
+            chart1.ChartAreas[0].AxisY.Title = "Położenie kątowe";  
 
             //ustawianie nazwy dla secondary osi Y
             chart1.ChartAreas[0].AxisY2.Title = "Ciśnienie";
@@ -195,6 +194,15 @@ namespace USB_205_DataAccquisition
             {
                 write.Write(RealValueOfAnalog0.ToString()+","+CalculatedEncoderPosition.ToString()+"\n");
             }
+
+            DateTime myDateTime = DateTime.Now;
+            string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
+
+            //Dodawanie probek z dwoch kanalów (CHO oraz DIO0 do bazy danych do tabeli sample)
+            Sample sampleCH0 = new Sample(1,(float)RealValueOfAnalog0,sqlFormattedDate);
+            Sample sampleDIO0 = new Sample(9,(float)CalculatedEncoderPosition,sqlFormattedDate);
+            DbSample.AddSample(sampleCH0);
+            DbSample.AddSample(sampleDIO0);
 
         }
 
