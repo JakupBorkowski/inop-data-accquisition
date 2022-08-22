@@ -70,7 +70,7 @@ namespace USB_205_DataAccquisition
         private void Form1_Load(object sender, EventArgs e)
         {
             timer1.Tick += timer1_Tick;
-            timer1.Interval = 100;
+            timer1.Interval = 1;
             button1.Text = "Start";
 
 
@@ -113,6 +113,8 @@ namespace USB_205_DataAccquisition
                 timer1.Start();
                 button1.Text = "Stop";
             }
+            Device device = new Device("jakub");
+            DbDevice.UpdateDevice(device,"3");
                 
         }
 
