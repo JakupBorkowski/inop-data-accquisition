@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace USB_205_DataAccquisition
 {
-    internal class DbSample
+    internal class DbSessionhaschannel
     {
         public static MySqlConnection GetConnection()
         {
@@ -27,17 +27,15 @@ namespace USB_205_DataAccquisition
         }
 
         //CREATE METHOD
-        public static void AddSample(Sample sample)
+        public static void AddSessionhaschannel(int sessionId, int channelId)
         {
-            string sql = "INSERT INTO sample VALUES (NULL, @ChannelId, @Value, @Timestamp)";
+            string sql = "INSERT INTO sessionhaschannel VALUES (@SessionId, @ChannelId)";
 
             MySqlConnection conn = GetConnection();
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.CommandType = CommandType.Text;
-            cmd.Parameters.Add("@ChannelId", MySqlDbType.VarChar).Value = sample.idChannel;
-            cmd.Parameters.Add("@Value", MySqlDbType.Float).Value = sample.value;
-            cmd.Parameters.Add("@Timestamp", MySqlDbType.VarChar).Value = sample.timestamp;
-
+            cmd.Parameters.Add("@SessionId", MySqlDbType.Int32).Value = sessionId;
+            cmd.Parameters.Add("@ChannelId", MySqlDbType.Int32).Value = channelId;//channel.idChannel;
 
             try
             {
@@ -50,43 +48,17 @@ namespace USB_205_DataAccquisition
             }
             conn.Close();
         }
-        
-        // TO DO UPDATE METHOD
-        public static void UpdateSample(Sample sample, string id)
-        {
-            string sql = "UPDATE sample SET idChannel = @ChannelId, value = @Value, timestamp = @Timestamp WHERE idSample = @SampleId";
 
+
+        //DELETE METHOD
+        public static void DeleteSessionhaschannel(string id)
+        {
+
+            string sql = "DELETE FROM session WHERE idSession = @SessionId";
             MySqlConnection conn = GetConnection();
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.CommandType = CommandType.Text;
-            cmd.Parameters.Add("@ChannelId", MySqlDbType.VarChar).Value = sample.idChannel;
-            cmd.Parameters.Add("@Value", MySqlDbType.Float).Value = sample.value;
-            cmd.Parameters.Add("@Timestamp", MySqlDbType.VarChar).Value = sample.timestamp;
-            cmd.Parameters.Add("@SampleId", MySqlDbType.VarChar).Value = id;
-
-            try
-            {
-                cmd.ExecuteNonQuery();
-                MessageBox.Show("Updated Succesfully.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Sample not updated! \n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            conn.Close();
-        }
-        
-
-        //TO DODELETE METHOD
-        public static void DeleteSample(string id)
-        {
-
-            string sql = "DELETE FROM sample WHERE idSample = @SampleId";
-            MySqlConnection conn = GetConnection();
-            MySqlCommand cmd = new MySqlCommand(sql, conn);
-            cmd.CommandType = CommandType.Text;
-
-            cmd.Parameters.Add("@SampleId", MySqlDbType.VarChar).Value = id;
+            cmd.Parameters.Add("@SessionId", MySqlDbType.Int32).Value = id;
 
             try
             {
@@ -100,9 +72,5 @@ namespace USB_205_DataAccquisition
             conn.Close();
 
         }
-
-        //TO DO 
-        //SEARCH METHOD NOT NEEDED ATM
-        
     }
 }

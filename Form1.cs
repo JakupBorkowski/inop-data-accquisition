@@ -70,9 +70,11 @@ namespace USB_205_DataAccquisition
         private void Form1_Load(object sender, EventArgs e)
         {
             timer1.Tick += timer1_Tick;
-            timer1.Interval = 1000;
+            timer1.Interval = 1;
             button1.Text = "Start";
 
+            //ustawianie tekstu dla przycisku o id button2
+            button2.Text = "Wyslij probki do bazy danych";
 
             //ustawianie zakresu dla primary Y axis
             chart1.ChartAreas[0].AxisY.Minimum = 0;
@@ -195,15 +197,23 @@ namespace USB_205_DataAccquisition
                 write.Write(RealValueOfAnalog0.ToString()+","+CalculatedEncoderPosition.ToString()+"\n");
             }
 
-            DateTime myDateTime = DateTime.Now;
-            string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
 
-            //Dodawanie probek z dwoch kanalów (CHO oraz DIO0 do bazy danych do tabeli sample)
-            Sample sampleCH0 = new Sample(1,(float)RealValueOfAnalog0,sqlFormattedDate);
-            Sample sampleDIO0 = new Sample(9,(float)CalculatedEncoderPosition,sqlFormattedDate);
-            DbSample.AddSample(sampleCH0);
-            DbSample.AddSample(sampleDIO0);
+            if (button2.Text == "Zakoncz wysylanie probek do bazy danych")
+            {
+                DateTime myDateTime = DateTime.Now;
+                string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
 
+                //Dodawanie probek z dwoch kanalów (CHO oraz DIO0 do bazy danych do tabeli sample)
+                Sample sampleCH0 = new Sample(1, (float)RealValueOfAnalog0, sqlFormattedDate);
+                Sample sampleDIO0 = new Sample(9, (float)CalculatedEncoderPosition, sqlFormattedDate);
+                DbSample.AddSample(sampleCH0);
+                DbSample.AddSample(sampleDIO0);
+            }
+
+
+
+            label2.Text = "CH0:  " + RealValueOfAnalog0.ToString();
+            label3.Text = "DIO0: " + CalculatedEncoderPosition.ToString();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -233,6 +243,25 @@ namespace USB_205_DataAccquisition
                 write.Dispose();
             }
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (button2.Text == "Wyslij probki do bazy danych")
+            {
+                button2.Text = "Zakoncz wysylanie probek do bazy danych";
+            }
+            else if(button2.Text == "Zakoncz wysylanie probek do bazy danych")
+            {
+                button2.Text = "Wyslij probki do bazy danych";
+            }
+            DateTime myDateTime = DateTime.Now;
+            string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
+            Session session = new Session("nowa",sqlFormattedDate,1,(float)1.2);
+            DbSession.AddSession(session);
+            //TU jeszcze do przemyslenia (mozna zapisywac kilka wejs jako tabele json, to bedzie to bardziej logiczne).
+            DbSessionhaschannel.AddSessionhaschannel(DbSession.LastSessionId(),1);
+            DbSessionhaschannel.AddSessionhaschannel(DbSession.LastSessionId(), 9);
         }
     }
 }

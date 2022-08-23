@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace USB_205_DataAccquisition
 {
-    internal class DbSample
+    internal class DbSession
     {
         public static MySqlConnection GetConnection()
         {
@@ -27,17 +27,17 @@ namespace USB_205_DataAccquisition
         }
 
         //CREATE METHOD
-        public static void AddSample(Sample sample)
+        public static void AddSession(Session session)
         {
-            string sql = "INSERT INTO sample VALUES (NULL, @ChannelId, @Value, @Timestamp)";
+            string sql = "INSERT INTO session VALUES (NULL, @Name, @Start, @NumberOfSamples, @Tp)";
 
             MySqlConnection conn = GetConnection();
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.CommandType = CommandType.Text;
-            cmd.Parameters.Add("@ChannelId", MySqlDbType.VarChar).Value = sample.idChannel;
-            cmd.Parameters.Add("@Value", MySqlDbType.Float).Value = sample.value;
-            cmd.Parameters.Add("@Timestamp", MySqlDbType.VarChar).Value = sample.timestamp;
-
+            cmd.Parameters.Add("@Name", MySqlDbType.VarChar).Value = session.name;
+            cmd.Parameters.Add("@Start", MySqlDbType.VarChar).Value = session.start;
+            cmd.Parameters.Add("@NumberOfSamples", MySqlDbType.Int32).Value = session.numberOfSamples;
+            cmd.Parameters.Add("@Tp", MySqlDbType.Float).Value = session.tp;
 
             try
             {
@@ -50,43 +50,17 @@ namespace USB_205_DataAccquisition
             }
             conn.Close();
         }
-        
-        // TO DO UPDATE METHOD
-        public static void UpdateSample(Sample sample, string id)
-        {
-            string sql = "UPDATE sample SET idChannel = @ChannelId, value = @Value, timestamp = @Timestamp WHERE idSample = @SampleId";
 
+
+        //DELETE METHOD
+        public static void DeleteSession(string id)
+        {
+
+            string sql = "DELETE FROM session WHERE idSession = @SessionId";
             MySqlConnection conn = GetConnection();
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.CommandType = CommandType.Text;
-            cmd.Parameters.Add("@ChannelId", MySqlDbType.VarChar).Value = sample.idChannel;
-            cmd.Parameters.Add("@Value", MySqlDbType.Float).Value = sample.value;
-            cmd.Parameters.Add("@Timestamp", MySqlDbType.VarChar).Value = sample.timestamp;
-            cmd.Parameters.Add("@SampleId", MySqlDbType.VarChar).Value = id;
-
-            try
-            {
-                cmd.ExecuteNonQuery();
-                MessageBox.Show("Updated Succesfully.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Sample not updated! \n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            conn.Close();
-        }
-        
-
-        //TO DODELETE METHOD
-        public static void DeleteSample(string id)
-        {
-
-            string sql = "DELETE FROM sample WHERE idSample = @SampleId";
-            MySqlConnection conn = GetConnection();
-            MySqlCommand cmd = new MySqlCommand(sql, conn);
-            cmd.CommandType = CommandType.Text;
-
-            cmd.Parameters.Add("@SampleId", MySqlDbType.VarChar).Value = id;
+            cmd.Parameters.Add("@SessionId", MySqlDbType.Int32).Value = id;
 
             try
             {
@@ -101,8 +75,33 @@ namespace USB_205_DataAccquisition
 
         }
 
-        //TO DO 
-        //SEARCH METHOD NOT NEEDED ATM
-        
+
+        //Find id of last added session
+        public static int LastSessionId()
+        {
+            string sql = "SELECT MAX(idSession) as idSession FROM session ";
+            MySqlConnection conn = GetConnection();
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            cmd.CommandType = CommandType.Text;
+            MySqlDataReader mdr;
+            try
+            {
+                mdr = cmd.ExecuteReader();
+                if(mdr.Read())
+                {
+                    //Console.WriteLine(mdr.GetInt32("idSession"));
+                    return mdr.GetInt32("idSession");
+                }
+                //MessageBox.Show("Id ostatniej sesji.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show("Device not deleted! \n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 0;
+            }
+            conn.Close();
+            return mdr.GetInt32("idSession");
+
+        }
     }
 }
