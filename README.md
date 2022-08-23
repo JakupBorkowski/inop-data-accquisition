@@ -13,4 +13,5 @@ Created database in MySQL consisting of 6 tables to present device and data give
 
 23.08.2022 [14:30] UPDATE
 Added labels to show actual reads from 2 channles and button, which allows user to start logging samples to database.
+
 ![image](https://user-images.githubusercontent.com/50780955/186158409-fa7a84cc-c06d-4bee-ab73-e8e3b29e815c.png)
