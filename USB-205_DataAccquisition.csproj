@@ -141,6 +141,7 @@
     <Compile Include="Sample.cs" />
     <Compile Include="Session.cs" />
     <Compile Include="Sessionhaschannel.cs" />
+    <Compile Include="USB205.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

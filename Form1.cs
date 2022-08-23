@@ -20,35 +20,8 @@ namespace USB_205_DataAccquisition
         //'definicja plytki zgodnie z numerem wykorzystanem w srodowisku Instacal'
         private MccDaq.MccBoard mydaqboard;
 
-        //'rezerwowanie miejsca na wartosci odczytane z portów CH0-CH7'
-        private short ValueOfAnalog0;
-        private short ValueOfAnalog1;
-        private short ValueOfAnalog2;
-        private short ValueOfAnalog3;
-        private short ValueOfAnalog4;
-        private short ValueOfAnalog5;
-        private short ValueOfAnalog6;
-        private short ValueOfAnalog7;
-
-        //'rezerwowanie miejsca na wartosci odczytane z portó CH0-CH7 zapisane w postaci rzeczywistej'
-        private float RealValueOfAnalog0;
-        private float RealValueOfAnalog1;
-        private float RealValueOfAnalog2;
-        private float RealValueOfAnalog3;
-        private float RealValueOfAnalog4;
-        private float RealValueOfAnalog5;
-        private float RealValueOfAnalog6;
-        private float RealValueOfAnalog7;
-
-        //'rezerwowanie miejsca na odczytaną wartość z portu DIO0-DIO7'
-        private short ValueOfAuxPort0;
-        private short ValueOfAuxPort1;
-        private short ValueOfAuxPort2;
-        private short ValueOfAuxPort3;
-        private short ValueOfAuxPort4;
-        private short ValueOfAuxPort5;
-        private short ValueOfAuxPort6;
-        private short ValueOfAuxPort7;
+        //instancja klasy przechowujaca dane z wejsc/wyjsc urządzenia pomiarowego Measurement Computing USB-205
+        USB205 usb205 = new USB205();
 
         //'liczba impulsów enkodera'
         private int NumberOfEncoderImpulses;
@@ -64,41 +37,28 @@ namespace USB_205_DataAccquisition
 
         //plik do zapisywania
         StreamWriter write;
-        bool WriteFlag;
-        bool IsSaveButtonClicked;
 
         private void Form1_Load(object sender, EventArgs e)
         {
             timer1.Tick += timer1_Tick;
             timer1.Interval = 1;
-            button1.Text = "Start";
-
-            //ustawianie tekstu dla przycisku o id button2
-            button2.Text = "Wyslij probki do bazy danych";
-
-            //ustawianie zakresu dla primary Y axis
-            chart1.ChartAreas[0].AxisY.Minimum = 0;
-            chart1.ChartAreas[0].AxisY.Maximum = 360;
-
-
-            //ustawianie zakresu dla secondary Y axis
-            chart1.ChartAreas[0].AxisY2.Minimum = -10;
-            chart1.ChartAreas[0].AxisY2.Maximum = 10;
+            //button1.Text = "Start";
 
             timer1.Start();
             button1.Text = "Stop";
-            WriteFlag = false;
-            IsSaveButtonClicked = false;
+            btnSave.Text = "Rozpocznij zapisywanie danych";
+            //ustawianie tekstu dla przycisku o id button2
+            button2.Text = "Wyslij probki do bazy danych";
+
+            //'Ustawienie liczby impulsów enkodera'
+            NumberOfEncoderImpulses = 1024;
+
+            mydaqboard = new MccDaq.MccBoard(0);
         }
 
         public Form1()
         {
             InitializeComponent();
-            mydaqboard = new MccDaq.MccBoard(0);
-            //'Ustawienie liczby impulsów enkodera'
-            NumberOfEncoderImpulses = 1024;
-
-            
         }
        
 
@@ -122,19 +82,19 @@ namespace USB_205_DataAccquisition
         private void timer1_Tick(object sender, EventArgs e)
         {
             //'odczytanie wartosci z wejscia CH0'
-            mydaqboard.AIn(0, MccDaq.Range.Bip10Volts, out ValueOfAnalog0);
+            mydaqboard.AIn(0, MccDaq.Range.Bip10Volts, out usb205.ValueOfAnalog0); //ValueOfAnalog0
             //'Konwertuje liczbę całkowitą na równoważną wartość napięcia (lub prądu) o pojedynczej precyzji'
-            mydaqboard.ToEngUnits(MccDaq.Range.Bip10Volts, ValueOfAnalog0, out RealValueOfAnalog0);
+            mydaqboard.ToEngUnits(MccDaq.Range.Bip10Volts, usb205.ValueOfAnalog0, out usb205.RealValueOfAnalog0);
 
 
             //'ustawianie portu DIO0 jako port DIGITAL IN'
             mydaqboard.DConfigPort(MccDaq.DigitalPortType.AuxPort0, MccDaq.DigitalPortDirection.DigitalIn);
             //'odczytywanie wartości z portu DIO0'
-            mydaqboard.DIn(MccDaq.DigitalPortType.AuxPort0,out ValueOfAuxPort0);
+            mydaqboard.DIn(MccDaq.DigitalPortType.AuxPort0,out usb205.ValueOfAuxPort0);
 
 
             //'obliczenie kąta enkodera na podstawie zliczonych impulsów'
-            if(ValueOfAuxPort0 == 1)
+            if(usb205.ValueOfAuxPort0 == 1)
             {
                 CurrentNumberOfImpulses += 1;
             }
@@ -146,10 +106,10 @@ namespace USB_205_DataAccquisition
 
             // obliczone polozenie katowe enkodera
             CalculatedEncoderPosition = (float)CurrentNumberOfImpulses/NumberOfEncoderImpulses * 360;
-
+            Console.WriteLine(usb205.ValueOfAuxPort0.ToString());
 
             //rysowanie wykresu dla wejścia analogowego CH0
-            chart1.Series[0].Points.AddXY(x, RealValueOfAnalog0);
+            chart1.Series[0].Points.AddXY(x, usb205.RealValueOfAnalog0);
 
             //rysowanie wykresy dla wejscia cyfrowego DIO0-
             chart1.Series[1].Points.AddXY(x, CalculatedEncoderPosition);
@@ -192,9 +152,9 @@ namespace USB_205_DataAccquisition
 
             //Kazdorazowe zapisywanie do pliku tekstowego/csv jezeli WriteFlag jest aktywna, to znaczy jeżeli
             //wcisniety zostal przycisk zapisz do pliku tekstowego i wybrane zostalo docelowe miejsce zapisu danych
-            if (WriteFlag)
+            if (btnSave.Text == "Zakończ zapisywanie danych")
             {
-                write.Write(RealValueOfAnalog0.ToString()+","+CalculatedEncoderPosition.ToString()+"\n");
+                write.Write(usb205.RealValueOfAnalog0.ToString()+","+CalculatedEncoderPosition.ToString()+"\n");
             }
 
 
@@ -204,21 +164,21 @@ namespace USB_205_DataAccquisition
                 string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
 
                 //Dodawanie probek z dwoch kanalów (CHO oraz DIO0 do bazy danych do tabeli sample)
-                Sample sampleCH0 = new Sample(1, (float)RealValueOfAnalog0, sqlFormattedDate);
+                Sample sampleCH0 = new Sample(1, (float)usb205.RealValueOfAnalog0, sqlFormattedDate);
                 Sample sampleDIO0 = new Sample(9, (float)CalculatedEncoderPosition, sqlFormattedDate);
                 DbSample.AddSample(sampleCH0);
                 DbSample.AddSample(sampleDIO0);
             }
 
 
-
-            label2.Text = "CH0:  " + RealValueOfAnalog0.ToString();
+            //wyswietlanie tekstu w label2 i label3 dotyczącego aktualnego stanu  badanych wejść CHO i DIO0
+            label2.Text = "CH0:  " + usb205.RealValueOfAnalog0.ToString();
             label3.Text = "DIO0: " + CalculatedEncoderPosition.ToString();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (IsSaveButtonClicked == false)
+            if (btnSave.Text == "Rozpocznij zapisywanie danych")
             {
                 SaveFileDialog save = new SaveFileDialog();
                 save.Title = "Save File";
@@ -227,18 +187,14 @@ namespace USB_205_DataAccquisition
                 if (save.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     write = new StreamWriter(File.Create(save.FileName));
-                    WriteFlag = true;
                     write.Write("Położenie kątowe" + "," + "Ciśnienie" + "\n");
                 }
-                IsSaveButtonClicked = true;
                 btnSave.Text = "Zakończ zapisywanie danych";
             }
-            else
+            else if(btnSave.Text == "Zakończ zapisywanie danych")
             {
-                IsSaveButtonClicked=false;
                 btnSave.Text = "Rozpocznij zapisywanie danych";
-                WriteFlag = false;
-
+               
                 //zamkniecie pliku, do ktorego zapisywanie byly dane
                 write.Dispose();
             }
@@ -250,18 +206,25 @@ namespace USB_205_DataAccquisition
             if (button2.Text == "Wyslij probki do bazy danych")
             {
                 button2.Text = "Zakoncz wysylanie probek do bazy danych";
+
+                //odczyta aktualnego czasu w formacie "yyyy-MM-dd HH:mm:ss.fff"
+                DateTime myDateTime = DateTime.Now;
+                string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
+
+                //utworzenie nowej sesji
+                Session session = new Session("nowa", sqlFormattedDate, 1, (float)1.2);
+                DbSession.AddSession(session);
+
+                //TU jeszcze do przemyslenia (mozna zapisywac kilka wejs jako tabele json, to bedzie to bardziej logiczne).
+                DbSessionhaschannel.AddSessionhaschannel(DbSession.LastSessionId(), 1);
+                DbSessionhaschannel.AddSessionhaschannel(DbSession.LastSessionId(), 9);
+
             }
             else if(button2.Text == "Zakoncz wysylanie probek do bazy danych")
             {
                 button2.Text = "Wyslij probki do bazy danych";
             }
-            DateTime myDateTime = DateTime.Now;
-            string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
-            Session session = new Session("nowa",sqlFormattedDate,1,(float)1.2);
-            DbSession.AddSession(session);
-            //TU jeszcze do przemyslenia (mozna zapisywac kilka wejs jako tabele json, to bedzie to bardziej logiczne).
-            DbSessionhaschannel.AddSessionhaschannel(DbSession.LastSessionId(),1);
-            DbSessionhaschannel.AddSessionhaschannel(DbSession.LastSessionId(), 9);
+            
         }
     }
 }
