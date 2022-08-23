@@ -10,3 +10,8 @@ Added btnSave, which allows to save data to csv file by pressing it
 22.08.2022 [18:07] UPDATE
 Created database in MySQL consisting of 6 tables to present device and data given/sent by it (picture below). Made DbDevice.cs, Device.cs, DbSample.cs, Sample.cs classes to handle CRUD request to database, using MySQL.Data NuGet.
 ![image](https://user-images.githubusercontent.com/50780955/185967694-1756e2cb-c865-43b9-bf92-b7622ebea376.png)
+
+23.08.2022 [14:30] UPDATE
+Added labels to show actual reads from 2 channles and button, which allows user to start logging samples to database.
+
+![image](https://user-images.githubusercontent.com/50780955/186158409-fa7a84cc-c06d-4bee-ab73-e8e3b29e815c.png)
