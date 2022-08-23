@@ -1,4 +1,4 @@
-﻿using MindFusion.Charting;
+﻿
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -45,7 +45,7 @@ namespace USB_205_DataAccquisition
             //button1.Text = "Start";
 
             timer1.Start();
-            button1.Text = "Stop";
+            //button1.Text = "Stop";
             btnSave.Text = "Rozpocznij zapisywanie danych";
             //ustawianie tekstu dla przycisku o id button2
             button2.Text = "Wyslij probki do bazy danych";
@@ -61,7 +61,7 @@ namespace USB_205_DataAccquisition
             InitializeComponent();
         }
        
-
+        /*
         private void button1_Click(object sender, EventArgs e)
         {
             if (timer1.Enabled)
@@ -77,7 +77,7 @@ namespace USB_205_DataAccquisition
             }
             
                 
-        }
+        }*/
 
         private void timer1_Tick(object sender, EventArgs e)
         {
