@@ -106,7 +106,6 @@ namespace USB_205_DataAccquisition
 
             // obliczone polozenie katowe enkodera
             CalculatedEncoderPosition = (float)CurrentNumberOfImpulses/NumberOfEncoderImpulses * 360;
-            Console.WriteLine(usb205.ValueOfAuxPort0.ToString());
 
             //rysowanie wykresu dla wejścia analogowego CH0
             chart1.Series[0].Points.AddXY(x, usb205.RealValueOfAnalog0);
@@ -154,7 +153,7 @@ namespace USB_205_DataAccquisition
             //wcisniety zostal przycisk zapisz do pliku tekstowego i wybrane zostalo docelowe miejsce zapisu danych
             if (btnSave.Text == "Zakończ zapisywanie danych")
             {
-                write.Write(usb205.RealValueOfAnalog0.ToString()+","+CalculatedEncoderPosition.ToString()+"\n");
+                write.Write(usb205.RealValueOfAnalog0.ToString()+";"+CalculatedEncoderPosition.ToString()+"\n");
             }
 
 
@@ -180,14 +179,20 @@ namespace USB_205_DataAccquisition
         {
             if (btnSave.Text == "Rozpocznij zapisywanie danych")
             {
+                //Zczytanie daty rozpoczecia zapisu
+                DateTime myDateTime = DateTime.Now;
+                string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
+
                 SaveFileDialog save = new SaveFileDialog();
                 save.Title = "Save File";
                 save.Filter = "Text Files (*txt)|*txt| All Files (*.*)|*.*";
 
+
                 if (save.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     write = new StreamWriter(File.Create(save.FileName));
-                    write.Write("Położenie kątowe" + "," + "Ciśnienie" + "\n");
+                    write.Write("Polozenie katowe" + ";" + "Cisnienie" + ";" + "Czas rozpoczecia zapisu: " + sqlFormattedDate + ";" + "Krok probkowania: " +timer1.Interval +  "\n");
+
                 }
                 btnSave.Text = "Zakończ zapisywanie danych";
             }
