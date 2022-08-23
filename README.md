@@ -6,3 +6,7 @@ Windows Forms App (.NET Framework 4.7.2) created to present data from USB-205 de
 20.08.2022 [19:28] UPDATE
 Added btnSave, which allows to save data to csv file by pressing it
 ![image](https://user-images.githubusercontent.com/50780955/185759271-11bce41f-513f-445f-af34-4e96cb5de59e.png)
+
+22.08.2022 [18:07] UPDATE
+Created database in MySQL consisting of 6 tables to present device and data given/sent by it (picture below). Made DbDevice.cs, Device.cs, DbSample.cs, Sample.cs classes to handle CRUD request to database, using MySQL.Data NuGet.
+![image](https://user-images.githubusercontent.com/50780955/185967694-1756e2cb-c865-43b9-bf92-b7622ebea376.png)
