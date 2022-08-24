@@ -23,7 +23,7 @@ Interface upadte, deleted Start/Stop button (button1), which was starting/stopin
 ![image](https://user-images.githubusercontent.com/50780955/186175086-af77ce93-851b-4d3e-869c-25864b6ebeca.png)
 
 24.08.2022 [12:10] UPDATE
-Added Menu bar and use 3 different forms to switch beetwen displayed views.
+Added Menu bar and used 3 different forms to switch beetwen displayed views.
 
 ![image](https://user-images.githubusercontent.com/50780955/186392605-eb2e0b4c-0d2e-40d4-8310-ade6db7f8007.png)
 
