@@ -135,15 +135,31 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FormDataCollector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormDataCollector.Designer.cs">
+      <DependentUpon>FormDataCollector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormLineError.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormLineError.Designer.cs">
+      <DependentUpon>FormLineError.cs</DependentUpon>
+    </Compile>
     <Compile Include="MyDateTimeSeries.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sample.cs" />
     <Compile Include="Session.cs" />
     <Compile Include="Sessionhaschannel.cs" />
+    <Compile Include="ThemeColor.cs" />
     <Compile Include="USB205.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormDataCollector.resx">
+      <DependentUpon>FormDataCollector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
