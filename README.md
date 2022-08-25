@@ -30,3 +30,16 @@ Added Menu bar and used 3 different forms to switch beetwen displayed views.
 ![image](https://user-images.githubusercontent.com/50780955/186392429-abf8ff5a-319c-44e3-91eb-a93230933121.png)
 
 ![image](https://user-images.githubusercontent.com/50780955/186392556-4367d198-583d-40f7-b9b7-7fb6a9e89789.png)
+
+
+25.08.2022 [15:40] UPDATE
+Added new table (event) to store data about events on line. 
+
+![image](https://user-images.githubusercontent.com/50780955/186680159-fd4d5ff4-1cac-4060-bc53-da9483e76dbf.png)
+
+Created new interface.
+
+![image](https://user-images.githubusercontent.com/50780955/186680379-f1cd2b69-412e-4831-81dc-fc9e50dc5918.png)
+
+
+
