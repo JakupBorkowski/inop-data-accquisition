@@ -13,7 +13,9 @@ namespace USB_205_DataAccquisition
     {
         public static MySqlConnection GetConnection()
         {
-            string sql = "datasource=localhost;port=3306;username=root;password=;database=usb205db";
+            //string sql = "datasource=localhost;port=3306;username=root;password=;database=usb205db";
+            string sql = "datasource=database-1.crdizhrpr8gd.us-east-1.rds.amazonaws.com;port=3306;username=root;password=12345678;database=datebase1;Convert Zero Datetime=True";
+
             MySqlConnection conn = new MySqlConnection(sql);
             try
             {

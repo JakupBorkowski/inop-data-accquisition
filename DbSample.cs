@@ -13,8 +13,10 @@ namespace USB_205_DataAccquisition
     {
         public static MySqlConnection GetConnection()
         {
-            string sql = "datasource=localhost;port=3306;username=root;password=;database=usb205db";
-            MySqlConnection conn = new MySqlConnection(sql);
+            //string sql = "datasource=localhost;port=3306;username=root;password=;database=usb205db";
+            string sql = "datasource=database-1.crdizhrpr8gd.us-east-1.rds.amazonaws.com;port=3306;username=root;password=12345678;database=datebase1;Convert Zero Datetime=True";
+           
+            MySqlConnection conn = new MySqlConnection(Globals.sql);
             try
             {
                 conn.Open();
@@ -31,8 +33,8 @@ namespace USB_205_DataAccquisition
         {
             string sql = "INSERT INTO sample VALUES (NULL, @ChannelId, @Value, @Timestamp)";
 
-            MySqlConnection conn = GetConnection();
-            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            //MySqlConnection conn = GetConnection();
+            MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.Add("@ChannelId", MySqlDbType.VarChar).Value = sample.idChannel;
             cmd.Parameters.Add("@Value", MySqlDbType.Float).Value = sample.value;
@@ -48,7 +50,7 @@ namespace USB_205_DataAccquisition
             {
                 //MessageBox.Show("Sample not inserted! \n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            conn.Close();
+            //conn.Close();
         }
         
         // TO DO UPDATE METHOD
@@ -56,8 +58,8 @@ namespace USB_205_DataAccquisition
         {
             string sql = "UPDATE sample SET idChannel = @ChannelId, value = @Value, timestamp = @Timestamp WHERE idSample = @SampleId";
 
-            MySqlConnection conn = GetConnection();
-            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            //MySqlConnection conn = GetConnection();
+            MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.Add("@ChannelId", MySqlDbType.VarChar).Value = sample.idChannel;
             cmd.Parameters.Add("@Value", MySqlDbType.Float).Value = sample.value;
@@ -73,7 +75,7 @@ namespace USB_205_DataAccquisition
             {
                 MessageBox.Show("Sample not updated! \n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            conn.Close();
+            //conn.Close();
         }
         
 
@@ -82,8 +84,8 @@ namespace USB_205_DataAccquisition
         {
 
             string sql = "DELETE FROM sample WHERE idSample = @SampleId";
-            MySqlConnection conn = GetConnection();
-            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            //MySqlConnection conn = GetConnection();
+            MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
             cmd.CommandType = CommandType.Text;
 
             cmd.Parameters.Add("@SampleId", MySqlDbType.VarChar).Value = id;
@@ -97,7 +99,7 @@ namespace USB_205_DataAccquisition
             {
                 MessageBox.Show("Device not deleted! \n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            conn.Close();
+           // conn.Close();
 
         }
 

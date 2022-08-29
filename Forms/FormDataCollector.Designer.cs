@@ -49,9 +49,10 @@
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.White;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label3.Location = new System.Drawing.Point(645, 244);
+            this.label3.Location = new System.Drawing.Point(860, 300);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(46, 18);
+            this.label3.Size = new System.Drawing.Size(60, 24);
             this.label3.TabIndex = 14;
             this.label3.Text = "label3";
             // 
@@ -61,9 +62,10 @@
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.White;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label2.Location = new System.Drawing.Point(645, 213);
+            this.label2.Location = new System.Drawing.Point(860, 262);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(46, 18);
+            this.label2.Size = new System.Drawing.Size(60, 24);
             this.label2.TabIndex = 13;
             this.label2.Text = "label2";
             // 
@@ -73,18 +75,20 @@
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.White;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.Location = new System.Drawing.Point(626, 180);
+            this.label1.Location = new System.Drawing.Point(835, 222);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(148, 20);
+            this.label1.Size = new System.Drawing.Size(184, 25);
             this.label1.TabIndex = 12;
             this.label1.Text = "Aktualny stan wejść";
             // 
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(635, 281);
+            this.button2.Location = new System.Drawing.Point(847, 346);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(136, 48);
+            this.button2.Size = new System.Drawing.Size(181, 59);
             this.button2.TabIndex = 11;
             this.button2.Text = "button2";
             this.button2.UseVisualStyleBackColor = true;
@@ -93,9 +97,10 @@
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Location = new System.Drawing.Point(635, 359);
+            this.btnSave.Location = new System.Drawing.Point(847, 442);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(136, 49);
+            this.btnSave.Size = new System.Drawing.Size(181, 60);
             this.btnSave.TabIndex = 10;
             this.btnSave.Text = "Rozpocznij zapisywanie danych";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -112,6 +117,7 @@
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(0, 0);
+            this.chart1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.chart1.Name = "chart1";
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
@@ -125,7 +131,7 @@
             series2.Name = "Położenie kątowe";
             this.chart1.Series.Add(series1);
             this.chart1.Series.Add(series2);
-            this.chart1.Size = new System.Drawing.Size(800, 450);
+            this.chart1.Size = new System.Drawing.Size(1067, 554);
             this.chart1.TabIndex = 9;
             this.chart1.Text = "chart1";
             // 
@@ -135,15 +141,16 @@
             // 
             // FormDataCollector
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1067, 554);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.chart1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "FormDataCollector";
             this.Text = "Zbieranie danych";
             this.Load += new System.EventHandler(this.FormDataCollector_Load);
