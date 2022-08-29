@@ -14,6 +14,7 @@ namespace USB_205_DataAccquisition
         public static MySqlConnection conn = GetConnection();
 
                     /// <summary>chujjjjjjjjjjjjjjjjjjjjjjjjjj
+                    /// ///hujjjjjj2
                     /// ///
                     /// </summary>
                     /// <returns></returns>
