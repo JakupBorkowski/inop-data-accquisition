@@ -13,7 +13,7 @@ namespace USB_205_DataAccquisition
         public static string sql = "datasource=localhost;port=3308;username=root;password=helloworld;database=db;Convert Zero Datetime=True";
         public static MySqlConnection conn = GetConnection();
 
-                    /// <summary>
+                    /// <summary>chujjjjjjjjjjjjjjjjjjjjjjjjjj
                     /// ///
                     /// </summary>
                     /// <returns></returns>
