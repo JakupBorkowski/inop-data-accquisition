@@ -62,7 +62,7 @@ namespace USB_205_DataAccquisition
             tempIndex = index;
             string color = ThemeColor.ColorList[index];
             //return ColorTranslator.FromHtml("#EA676C"color);
-            return ColorTranslator.FromHtml("#0094BC");
+            return ColorTranslator.FromHtml("#3F51B5");
         }
 
         private void ActivateButton(object btnSender)
