@@ -34,7 +34,7 @@ namespace USB_205_DataAccquisition
         public static void DeleteSessionhaschannel(string id)
         {
 
-            string sql = "DELETE FROM session WHERE idSession = @SessionId";
+            string sql = "DELETE FROM session WHERE id_session = @SessionId";
             Globals.conn = Globals.GetConnection();
             MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
             cmd.CommandType = CommandType.Text;

@@ -36,7 +36,7 @@ namespace USB_205_DataAccquisition
         //UPDATE METHOD
         public static void UpdateDevice(Device device, string id)
         {
-            string sql = "UPDATE device SET name = @DeviceName WHERE idDevice = @DeviceId";
+            string sql = "UPDATE device SET name = @DeviceName WHERE id_device = @DeviceId";
 
             Globals.conn = Globals.GetConnection();
             MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
@@ -59,7 +59,7 @@ namespace USB_205_DataAccquisition
         //DELETE METHOD
         public static void DeleteDevice(string id)
         {
-            string sql = "DELETE FROM device WHERE idDevice = @DeviceId";
+            string sql = "DELETE FROM device WHERE id_device = @DeviceId";
             Globals.conn = Globals.GetConnection();
             MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
             cmd.CommandType = CommandType.Text;

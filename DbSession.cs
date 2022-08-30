@@ -35,7 +35,7 @@ namespace USB_205_DataAccquisition
         public static void DeleteSession(string id)
         {
 
-            string sql = "DELETE FROM session WHERE idSession = @SessionId";
+            string sql = "DELETE FROM session WHERE id_session = @SessionId";
             Globals.conn = Globals.GetConnection();
             MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
             cmd.CommandType = CommandType.Text;
@@ -54,7 +54,7 @@ namespace USB_205_DataAccquisition
         //Find id of last added session
         public static int LastSessionId()
         {
-            string sql = "SELECT MAX(idSession) as idSession FROM session ";
+            string sql = "SELECT MAX(id_session) as id_session FROM session ";
             Globals.conn = Globals.GetConnection();
             MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
             cmd.CommandType = CommandType.Text;
@@ -64,7 +64,7 @@ namespace USB_205_DataAccquisition
                 mdr = cmd.ExecuteReader();
                 if(mdr.Read())
                 {
-                    return mdr.GetInt32("idSession");
+                    return mdr.GetInt32("id_session");
                     mdr.Close();
                 }        
             }
@@ -73,7 +73,7 @@ namespace USB_205_DataAccquisition
                 return 0;
             }
             Globals.conn.Close();
-            return mdr.GetInt32("idSession");
+            return mdr.GetInt32("id_session");
 
         }
     }

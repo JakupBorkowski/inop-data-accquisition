@@ -117,7 +117,7 @@ namespace USB_205_DataAccquisition.Forms
         private void FormDataCollector_Load(object sender, EventArgs e)
         {
             timer1.Tick += timer1_Tick;
-            timer1.Interval = 1;
+            timer1.Interval = 1000;
             //button1.Text = "Start";
 
             timer1.Start();

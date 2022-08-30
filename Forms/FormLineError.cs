@@ -84,7 +84,7 @@ namespace USB_205_DataAccquisition.Forms
 
         public void Display()
         {
-            DbEvent.DisplayAndSearch("SELECT idEvent, idSession, idMachine, info, stopTime, stopTimeLength FROM event ORDER BY idEvent DESC",dataGridView);
+            DbEvent.DisplayAndSearch("SELECT id_event, id_session, id_machine, info, stop_time, stop_time_length FROM event ORDER BY id_event DESC",dataGridView);
         }
 
         private void FormLineError_Shown(object sender, EventArgs e)
@@ -94,7 +94,7 @@ namespace USB_205_DataAccquisition.Forms
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
-            DbEvent.DisplayAndSearch("SELECT idEvent, idSession, idMachine, info, stopTime, stopTimeLength FROM event WHERE stopTIme LIKE'%"+txtSearch.Text +"%' ORDER BY idEvent DESC", dataGridView);
+            DbEvent.DisplayAndSearch("SELECT id_event, id_session, id_machine, info, stop_time, stop_time_length FROM event WHERE stopTIme LIKE'%"+txtSearch.Text +"%' ORDER BY idEvent DESC", dataGridView);
         }
 
         private void dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)

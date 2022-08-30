@@ -37,7 +37,7 @@ namespace USB_205_DataAccquisition
         public static void UpdateEvent(Event e, string id)
         {
             Globals.conn = Globals.GetConnection();
-            string sql = "UPDATE event SET idSession = @IDSESSION, idMachine = @IDMACHINE, info = @INFO, stopTime = @STOPTIME, stopTimeLength = @STOPTIMELENGTH WHERE idEvent = @IDEVENT";
+            string sql = "UPDATE event SET id_session = @IDSESSION, id_machine = @IDMACHINE, info = @INFO, stop_time = @STOPTIME, stop_time_length = @STOPTIMELENGTH WHERE id_event = @IDEVENT";
            
             MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
             cmd.CommandType = CommandType.Text;
@@ -60,7 +60,7 @@ namespace USB_205_DataAccquisition
         public static void DeleteEvent(string id)
         {
             Globals.conn = Globals.GetConnection();
-            string sql = "DELETE FROM event WHERE idEvent = @EventId";
+            string sql = "DELETE FROM event WHERE id_event = @EventId";
           
             MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
             cmd.CommandType = CommandType.Text;

@@ -36,7 +36,7 @@ namespace USB_205_DataAccquisition
         public static void UpdateSample(Sample sample, string id)
         {
             Globals.conn = Globals.GetConnection();
-            string sql = "UPDATE sample SET idChannel = @ChannelId, value = @Value, timestamp = @Timestamp WHERE idSample = @SampleId";
+            string sql = "UPDATE sample SET id_channel = @ChannelId, value = @Value, timestamp = @Timestamp WHERE id_sample = @SampleId";
 
             MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
             cmd.CommandType = CommandType.Text;
@@ -58,7 +58,7 @@ namespace USB_205_DataAccquisition
         public static void DeleteSample(string id)
         {
             Globals.conn = Globals.GetConnection();
-            string sql = "DELETE FROM sample WHERE idSample = @SampleId";
+            string sql = "DELETE FROM sample WHERE id_sample = @SampleId";
 
             MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
             cmd.CommandType = CommandType.Text;
