@@ -11,15 +11,11 @@ namespace USB_205_DataAccquisition
 {
     internal class DbEvent
     {
-    
-
-
         //CREATE METHOD
         public static void AddEvent(Event e)
         {
             string sql = "INSERT INTO event VALUES (NULL, @IDSESSION, @IDMACHINE, @INFO, @STOPTIME, @STOPTIMELENGTH)";
-
-            //Globals.conn = GetConnection();
+            Globals.conn = Globals.GetConnection();
             MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.Add("@IDSESSION", MySqlDbType.Int32).Value = e.idSession;
@@ -31,22 +27,16 @@ namespace USB_205_DataAccquisition
             try
             {
                 cmd.ExecuteNonQuery();
-                MessageBox.Show("Added Succesfully.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Student not insert! \n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            //conn.Close();
+            catch (Exception ex){}
+            Globals.conn.Close();
         }
 
         //UPDATE METHOD
-        //CREATE METHOD
         public static void UpdateEvent(Event e, string id)
         {
             string sql = "UPDATE event SET idSession = @IDSESSION, idMachine = @IDMACHINE, info = @INFO, stopTime = @STOPTIME, stopTimeLength = @STOPTIMELENGTH WHERE idEvent = @IDEVENT";
-
-            //MySqlConnection conn = GetConnection();
+            Globals.conn = Globals.GetConnection();
             MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.Add("@IDSESSION", MySqlDbType.Int32).Value = e.idSession;
@@ -59,20 +49,16 @@ namespace USB_205_DataAccquisition
             try
             {
                 cmd.ExecuteNonQuery();
-                MessageBox.Show("Updated Succesfully.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Student not insert! \n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            //conn.Close();
+            catch (Exception ex){}
+            Globals.conn.Close();
         }
 
         //DELETE METHOD
         public static void DeleteEvent(string id)
         {
             string sql = "DELETE FROM event WHERE idEvent = @EventId";
-            //MySqlConnection conn = GetConnection();
+            Globals.conn = Globals.GetConnection();
             MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.Add("@EventId", MySqlDbType.VarChar).Value = id;
@@ -80,28 +66,22 @@ namespace USB_205_DataAccquisition
             try
             {
                 cmd.ExecuteNonQuery();
-                MessageBox.Show("Deleted Succesfully.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Device not deleted! \n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            //conn.Close();
-
+            catch (Exception ex){}
+            Globals.conn.Close();
         }
 
-        //TO DO 
-        //SEARCH METHOD NOT NEEDED ATM
+        //TO DO
         public static void DisplayAndSearch(string query, DataGridView dgv)
         {
             string sql = query;
-            //MySqlConnection conn = GetConnection();
+            Globals.conn = Globals.GetConnection();
             MySqlCommand cmd  = new MySqlCommand(sql, Globals.conn);
             MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
             DataTable tbl = new DataTable();
             adp.Fill(tbl);
             dgv.DataSource = tbl;
-            //conn.Close();
+            Globals.conn.Close();
 
         }
 

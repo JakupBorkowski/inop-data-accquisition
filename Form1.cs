@@ -58,7 +58,8 @@ namespace USB_205_DataAccquisition
             }
             tempIndex = index;
             string color = ThemeColor.ColorList[index];
-            return ColorTranslator.FromHtml(color);
+            //return ColorTranslator.FromHtml("#EA676C"color);
+            return ColorTranslator.FromHtml("#0094BC");
         }
 
         private void ActivateButton(object btnSender)
@@ -137,11 +138,13 @@ namespace USB_205_DataAccquisition
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Globals.conn = Globals.GetConnection();
             OpenChildForm(new Forms.FormDataCollector(),sender);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
+            Globals.conn.Close();
             OpenChildForm(new Forms.FormLineError(), sender);
         }
 
@@ -172,6 +175,7 @@ namespace USB_205_DataAccquisition
 
         private void btnClose_Click(object sender, EventArgs e)
         {
+            Globals.conn.Close();
             Application.Exit();
         }
 
