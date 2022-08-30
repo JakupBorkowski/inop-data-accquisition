@@ -14,8 +14,9 @@ namespace USB_205_DataAccquisition
         //CREATE METHOD
         public static void AddEvent(Event e)
         {
-            string sql = "INSERT INTO event VALUES (NULL, @IDSESSION, @IDMACHINE, @INFO, @STOPTIME, @STOPTIMELENGTH)";
             Globals.conn = Globals.GetConnection();
+            string sql = "INSERT INTO event VALUES (NULL, @IDSESSION, @IDMACHINE, @INFO, @STOPTIME, @STOPTIMELENGTH)";
+            
             MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.Add("@IDSESSION", MySqlDbType.Int32).Value = e.idSession;
@@ -35,8 +36,9 @@ namespace USB_205_DataAccquisition
         //UPDATE METHOD
         public static void UpdateEvent(Event e, string id)
         {
-            string sql = "UPDATE event SET idSession = @IDSESSION, idMachine = @IDMACHINE, info = @INFO, stopTime = @STOPTIME, stopTimeLength = @STOPTIMELENGTH WHERE idEvent = @IDEVENT";
             Globals.conn = Globals.GetConnection();
+            string sql = "UPDATE event SET idSession = @IDSESSION, idMachine = @IDMACHINE, info = @INFO, stopTime = @STOPTIME, stopTimeLength = @STOPTIMELENGTH WHERE idEvent = @IDEVENT";
+           
             MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.Add("@IDSESSION", MySqlDbType.Int32).Value = e.idSession;
@@ -57,8 +59,9 @@ namespace USB_205_DataAccquisition
         //DELETE METHOD
         public static void DeleteEvent(string id)
         {
-            string sql = "DELETE FROM event WHERE idEvent = @EventId";
             Globals.conn = Globals.GetConnection();
+            string sql = "DELETE FROM event WHERE idEvent = @EventId";
+          
             MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.Add("@EventId", MySqlDbType.VarChar).Value = id;
@@ -69,20 +72,20 @@ namespace USB_205_DataAccquisition
             }
             catch (Exception ex){}
             Globals.conn.Close();
+           
         }
 
         //TO DO
         public static void DisplayAndSearch(string query, DataGridView dgv)
         {
-            string sql = query;
             Globals.conn = Globals.GetConnection();
+            string sql = query;
             MySqlCommand cmd  = new MySqlCommand(sql, Globals.conn);
             MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
             DataTable tbl = new DataTable();
             adp.Fill(tbl);
-            dgv.DataSource = tbl;
+            dgv.DataSource = tbl;     
             Globals.conn.Close();
-
         }
 
     }

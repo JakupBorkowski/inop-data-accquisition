@@ -40,6 +40,9 @@ namespace USB_205_DataAccquisition
             this.Text = String.Empty;
             this.ControlBox = false;
             this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
+
+            
+
         }
 
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
@@ -112,9 +115,7 @@ namespace USB_205_DataAccquisition
             this.panelDesktopPanel.Tag = childForm;
             lblTitle.Text = childForm.Text;
             childForm.BringToFront();
-            //lblTitle.Text = childForm.Text;
             childForm.Show();
-            //lblTitle.Text = childForm.Text;
         }
        
        
@@ -138,13 +139,11 @@ namespace USB_205_DataAccquisition
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Globals.conn = Globals.GetConnection();
             OpenChildForm(new Forms.FormDataCollector(),sender);
         }
 
         private void button3_Click(object sender, EventArgs e)
-        {
-            Globals.conn.Close();
+        {  
             OpenChildForm(new Forms.FormLineError(), sender);
         }
 
@@ -175,7 +174,6 @@ namespace USB_205_DataAccquisition
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            Globals.conn.Close();
             Application.Exit();
         }
 

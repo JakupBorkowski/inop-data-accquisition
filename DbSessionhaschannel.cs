@@ -15,7 +15,7 @@ namespace USB_205_DataAccquisition
         public static void AddSessionhaschannel(int sessionId, int channelId)
         {
             string sql = "INSERT INTO sessionhaschannel VALUES (@SessionId, @ChannelId)";
-
+            Globals.conn = Globals.GetConnection();
             MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.Add("@SessionId", MySqlDbType.Int32).Value = sessionId;
@@ -26,6 +26,7 @@ namespace USB_205_DataAccquisition
                 cmd.ExecuteNonQuery();
             }
             catch (Exception ex){}
+            Globals.conn.Close();
         }
 
 
@@ -34,6 +35,7 @@ namespace USB_205_DataAccquisition
         {
 
             string sql = "DELETE FROM session WHERE idSession = @SessionId";
+            Globals.conn = Globals.GetConnection();
             MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.Add("@SessionId", MySqlDbType.Int32).Value = id;
@@ -43,6 +45,7 @@ namespace USB_205_DataAccquisition
                 cmd.ExecuteNonQuery();
             }
             catch (Exception ex){}
+            Globals.conn.Close();
         }
     }
 }

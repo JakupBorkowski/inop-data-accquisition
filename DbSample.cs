@@ -14,6 +14,7 @@ namespace USB_205_DataAccquisition
         //CREATE METHOD
         public static void AddSample(Sample sample)
         {
+            Globals.conn = Globals.GetConnection();
             string sql = "INSERT INTO sample VALUES (NULL, @ChannelId, @Value, @Timestamp)";
             MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
             cmd.CommandType = CommandType.Text;
@@ -25,12 +26,16 @@ namespace USB_205_DataAccquisition
             {
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception ex){}
+            catch (Exception ex){
+                 //MessageBox.Show("MySQL Connection! \n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            Globals.conn.Close();   
         }
         
         // TO DO UPDATE METHOD
         public static void UpdateSample(Sample sample, string id)
         {
+            Globals.conn = Globals.GetConnection();
             string sql = "UPDATE sample SET idChannel = @ChannelId, value = @Value, timestamp = @Timestamp WHERE idSample = @SampleId";
 
             MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
@@ -45,12 +50,14 @@ namespace USB_205_DataAccquisition
                 cmd.ExecuteNonQuery();
             }
             catch (Exception ex){}
+            Globals.conn.Close();
            
         }
         
         //DELETE METHOD
         public static void DeleteSample(string id)
         {
+            Globals.conn = Globals.GetConnection();
             string sql = "DELETE FROM sample WHERE idSample = @SampleId";
 
             MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
@@ -61,7 +68,7 @@ namespace USB_205_DataAccquisition
                 cmd.ExecuteNonQuery();
             }
             catch (Exception ex){}
-
+            Globals.conn.Close();
         }
 
         //TO DO 

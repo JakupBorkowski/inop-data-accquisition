@@ -15,7 +15,7 @@ namespace USB_205_DataAccquisition
         public static void AddSession(Session session)
         {
             string sql = "INSERT INTO session VALUES (NULL, @Name, @Start, @NumberOfSamples, @Tp)";
-
+            Globals.conn = Globals.GetConnection();
             MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.Add("@Name", MySqlDbType.VarChar).Value = session.name;
@@ -28,6 +28,7 @@ namespace USB_205_DataAccquisition
                 cmd.ExecuteNonQuery();
             }
             catch (Exception ex){}
+            Globals.conn.Close();
         }
 
         //DELETE METHOD
@@ -35,6 +36,7 @@ namespace USB_205_DataAccquisition
         {
 
             string sql = "DELETE FROM session WHERE idSession = @SessionId";
+            Globals.conn = Globals.GetConnection();
             MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.Add("@SessionId", MySqlDbType.Int32).Value = id;
@@ -44,6 +46,7 @@ namespace USB_205_DataAccquisition
                 cmd.ExecuteNonQuery();
             }
             catch (Exception ex){}
+            Globals.conn.Close();
 
         }
 
@@ -52,6 +55,7 @@ namespace USB_205_DataAccquisition
         public static int LastSessionId()
         {
             string sql = "SELECT MAX(idSession) as idSession FROM session ";
+            Globals.conn = Globals.GetConnection();
             MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
             cmd.CommandType = CommandType.Text;
             MySqlDataReader mdr;
@@ -61,12 +65,14 @@ namespace USB_205_DataAccquisition
                 if(mdr.Read())
                 {
                     return mdr.GetInt32("idSession");
+                    mdr.Close();
                 }        
             }
             catch (Exception ex)
             {
                 return 0;
             }
+            Globals.conn.Close();
             return mdr.GetInt32("idSession");
 
         }
