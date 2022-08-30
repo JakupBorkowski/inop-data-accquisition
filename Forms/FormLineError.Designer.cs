@@ -198,21 +198,21 @@
             // 
             // Column1
             // 
-            this.Column1.DataPropertyName = "idEvent";
+            this.Column1.DataPropertyName = "id_event";
             this.Column1.HeaderText = "idEvent";
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
             // 
             // Column2
             // 
-            this.Column2.DataPropertyName = "idSession";
+            this.Column2.DataPropertyName = "id_session";
             this.Column2.HeaderText = "idSession";
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
             // 
             // Column3
             // 
-            this.Column3.DataPropertyName = "idMachine";
+            this.Column3.DataPropertyName = "id_machine";
             this.Column3.HeaderText = "idMachine";
             this.Column3.Name = "Column3";
             this.Column3.ReadOnly = true;
@@ -226,14 +226,14 @@
             // 
             // Column5
             // 
-            this.Column5.DataPropertyName = "stopTime";
+            this.Column5.DataPropertyName = "stop_time";
             this.Column5.HeaderText = "stopTIme";
             this.Column5.Name = "Column5";
             this.Column5.ReadOnly = true;
             // 
             // Column6
             // 
-            this.Column6.DataPropertyName = "stopTimeLength";
+            this.Column6.DataPropertyName = "stop_time_length";
             this.Column6.HeaderText = "stopTimeLength";
             this.Column6.Name = "Column6";
             this.Column6.ReadOnly = true;

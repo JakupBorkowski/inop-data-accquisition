@@ -94,7 +94,7 @@ namespace USB_205_DataAccquisition.Forms
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
-            DbEvent.DisplayAndSearch("SELECT id_event, id_session, id_machine, info, stop_time, stop_time_length FROM event WHERE stopTIme LIKE'%"+txtSearch.Text +"%' ORDER BY idEvent DESC", dataGridView);
+            DbEvent.DisplayAndSearch("SELECT id_event, id_session, id_machine, info, stop_time, stop_time_length FROM event WHERE stop_time LIKE'%"+txtSearch.Text +"%' ORDER BY id_event DESC", dataGridView);
         }
 
         private void dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)

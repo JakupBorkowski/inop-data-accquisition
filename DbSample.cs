@@ -11,34 +11,53 @@ namespace USB_205_DataAccquisition
 {
     internal class DbSample
     {
+        public static MySqlConnection GetConnection()
+        {
+            string sql = Globals.sql;
+            MySqlConnection conn = new MySqlConnection(sql);
+            try
+            {
+                conn.Open();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("MySQL Connection! \n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return conn;
+        }
+
         //CREATE METHOD
         public static void AddSample(Sample sample)
         {
-            Globals.conn = Globals.GetConnection();
             string sql = "INSERT INTO sample VALUES (NULL, @ChannelId, @Value, @Timestamp)";
-            MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
+
+            MySqlConnection conn = GetConnection();
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.Add("@ChannelId", MySqlDbType.VarChar).Value = sample.idChannel;
             cmd.Parameters.Add("@Value", MySqlDbType.Float).Value = sample.value;
             cmd.Parameters.Add("@Timestamp", MySqlDbType.VarChar).Value = sample.timestamp;
 
+
             try
             {
                 cmd.ExecuteNonQuery();
+                //MessageBox.Show("Added Succesfully.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex){
-                 //MessageBox.Show("MySQL Connection! \n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            catch (Exception ex)
+            {
+                //MessageBox.Show("Sample not inserted! \n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            Globals.conn.Close();   
+            conn.Close();
         }
-        
+
         // TO DO UPDATE METHOD
         public static void UpdateSample(Sample sample, string id)
         {
-            Globals.conn = Globals.GetConnection();
             string sql = "UPDATE sample SET id_channel = @ChannelId, value = @Value, timestamp = @Timestamp WHERE id_sample = @SampleId";
 
-            MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
+            MySqlConnection conn = GetConnection();
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.Add("@ChannelId", MySqlDbType.VarChar).Value = sample.idChannel;
             cmd.Parameters.Add("@Value", MySqlDbType.Float).Value = sample.value;
@@ -48,31 +67,42 @@ namespace USB_205_DataAccquisition
             try
             {
                 cmd.ExecuteNonQuery();
+                MessageBox.Show("Updated Succesfully.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex){}
-            Globals.conn.Close();
-           
+            catch (Exception ex)
+            {
+                MessageBox.Show("Sample not updated! \n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            conn.Close();
         }
-        
-        //DELETE METHOD
+
+
+        //TO DODELETE METHOD
         public static void DeleteSample(string id)
         {
-            Globals.conn = Globals.GetConnection();
-            string sql = "DELETE FROM sample WHERE id_sample = @SampleId";
 
-            MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
+            string sql = "DELETE FROM sample WHERE id_sample = @SampleId";
+            MySqlConnection conn = GetConnection();
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.CommandType = CommandType.Text;
+
             cmd.Parameters.Add("@SampleId", MySqlDbType.VarChar).Value = id;
+
             try
             {
                 cmd.ExecuteNonQuery();
+                MessageBox.Show("Deleted Succesfully.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex){}
-            Globals.conn.Close();
+            catch (Exception ex)
+            {
+                MessageBox.Show("Device not deleted! \n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            conn.Close();
+
         }
 
         //TO DO 
         //SEARCH METHOD NOT NEEDED ATM
-        
+
     }
 }

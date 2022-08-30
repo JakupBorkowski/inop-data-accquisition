@@ -12,17 +12,31 @@ using MindFusion.Charting.Components;
 using MindFusion.Charting.WinForms;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace USB_205_DataAccquisition
 {
 
     public partial class Form1 : Form
     {
-       
+
+        private void backgroundFunction()
+        {
+            while (true)
+            {
+                if (Globals.sampleList.Count != 0)
+                {
+                    DbSample.AddSample(Globals.sampleList[0]);
+                    Globals.sampleList.RemoveAt(0);
+                }
+            }
+        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+            Thread obj1 = new Thread(backgroundFunction);
+            obj1.IsBackground = true;
+            obj1.Start();
         }
 
         //Fields
@@ -31,6 +45,7 @@ namespace USB_205_DataAccquisition
         private int tempIndex;
         private Form activeForm;
 
+        
 
         public Form1()
         {

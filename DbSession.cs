@@ -11,13 +11,30 @@ namespace USB_205_DataAccquisition
 {
     internal class DbSession
     {
+        public static MySqlConnection GetConnection()
+        {
+            string sql = Globals.sql;
+            MySqlConnection conn = new MySqlConnection(sql);
+            try
+            {
+                conn.Open();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("MySQL Connection! \n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return conn;
+        }
+
         //CREATE METHOD
         public static void AddSession(Session session)
         {
-            string sql = "INSERT INTO session VALUES (NULL, @Name, @Start, @NumberOfSamples, @Tp)";
-            Globals.conn = Globals.GetConnection();
-            MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
+            string sql = "INSERT INTO session VALUES (NULL, @OrderId ,@Name, @Start, @NumberOfSamples, @Tp)";
+
+            MySqlConnection conn = GetConnection();
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.CommandType = CommandType.Text;
+            cmd.Parameters.Add("@OrderId", MySqlDbType.Int32).Value = session.order_id;
             cmd.Parameters.Add("@Name", MySqlDbType.VarChar).Value = session.name;
             cmd.Parameters.Add("@Start", MySqlDbType.VarChar).Value = session.start;
             cmd.Parameters.Add("@NumberOfSamples", MySqlDbType.Int32).Value = session.numberOfSamples;
@@ -26,27 +43,36 @@ namespace USB_205_DataAccquisition
             try
             {
                 cmd.ExecuteNonQuery();
+                //MessageBox.Show("Added Succesfully.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex){}
-            Globals.conn.Close();
+            catch (Exception ex)
+            {
+                MessageBox.Show("Session not inserted! \n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            conn.Close();
         }
+
 
         //DELETE METHOD
         public static void DeleteSession(string id)
         {
 
             string sql = "DELETE FROM session WHERE id_session = @SessionId";
-            Globals.conn = Globals.GetConnection();
-            MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
+            MySqlConnection conn = GetConnection();
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.Add("@SessionId", MySqlDbType.Int32).Value = id;
 
             try
             {
                 cmd.ExecuteNonQuery();
+                MessageBox.Show("Deleted Succesfully.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex){}
-            Globals.conn.Close();
+            catch (Exception ex)
+            {
+                MessageBox.Show("Device not deleted! \n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            conn.Close();
 
         }
 
@@ -55,24 +81,26 @@ namespace USB_205_DataAccquisition
         public static int LastSessionId()
         {
             string sql = "SELECT MAX(id_session) as id_session FROM session ";
-            Globals.conn = Globals.GetConnection();
-            MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
+            MySqlConnection conn = GetConnection();
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.CommandType = CommandType.Text;
             MySqlDataReader mdr;
             try
             {
                 mdr = cmd.ExecuteReader();
-                if(mdr.Read())
+                if (mdr.Read())
                 {
+                    //Console.WriteLine(mdr.GetInt32("idSession"));
                     return mdr.GetInt32("id_session");
-                    mdr.Close();
-                }        
+                }
+                //MessageBox.Show("Id ostatniej sesji.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
+                //MessageBox.Show("Device not deleted! \n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 0;
             }
-            Globals.conn.Close();
+            conn.Close();
             return mdr.GetInt32("id_session");
 
         }

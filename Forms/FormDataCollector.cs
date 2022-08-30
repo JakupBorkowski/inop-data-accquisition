@@ -9,6 +9,8 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
+
 
 namespace USB_205_DataAccquisition.Forms
 {
@@ -52,6 +54,8 @@ namespace USB_205_DataAccquisition.Forms
         //plik do zapisywania
         StreamWriter write;
 
+        
+
 
         public FormDataCollector()
         {
@@ -70,7 +74,7 @@ namespace USB_205_DataAccquisition.Forms
                 string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
 
                 //utworzenie nowej sesji
-                Session session = new Session("nowa", sqlFormattedDate, 1, (float)1.2);
+                Session session = new Session(3,"nowa", sqlFormattedDate, 1, (float)1.2);
                 DbSession.AddSession(session);
 
                 //TU jeszcze do przemyslenia (mozna zapisywac kilka wejs jako tabele json, to bedzie to bardziej logiczne).
@@ -81,8 +85,10 @@ namespace USB_205_DataAccquisition.Forms
             else if (button2.Text == "Zakoncz wysylanie probek do bazy danych")
             {
                 button2.Text = "Wyslij probki do bazy danych";
+               
             }
         }
+       
 
         private void btnSave_Click(object sender, EventArgs e)
         {
@@ -117,7 +123,7 @@ namespace USB_205_DataAccquisition.Forms
         private void FormDataCollector_Load(object sender, EventArgs e)
         {
             timer1.Tick += timer1_Tick;
-            timer1.Interval = 1000;
+            timer1.Interval = 100;
             //button1.Text = "Start";
 
             timer1.Start();
@@ -131,6 +137,8 @@ namespace USB_205_DataAccquisition.Forms
 
             mydaqboard = new MccDaq.MccBoard(0);
             LoadTheme();
+
+            
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -208,6 +216,7 @@ namespace USB_205_DataAccquisition.Forms
             if (btnSave.Text == "Zakończ zapisywanie danych")
             {
                 write.Write(usb205.RealValueOfAnalog0.ToString() + ";" + CalculatedEncoderPosition.ToString() + "\n");
+
             }
 
 
@@ -219,14 +228,16 @@ namespace USB_205_DataAccquisition.Forms
                 //Dodawanie probek z dwoch kanalów (CHO oraz DIO0 do bazy danych do tabeli sample)
                 Sample sampleCH0 = new Sample(1, (float)usb205.RealValueOfAnalog0, sqlFormattedDate);
                 Sample sampleDIO0 = new Sample(9, (float)CalculatedEncoderPosition, sqlFormattedDate);
-                DbSample.AddSample(sampleCH0);
-                DbSample.AddSample(sampleDIO0);
+                Globals.sampleList.Add(sampleCH0);
+                Globals.sampleList.Add(sampleDIO0);
+               
             }
 
 
             //wyswietlanie tekstu w label2 i label3 dotyczącego aktualnego stanu  badanych wejść CHO i DIO0
             label2.Text = "CH0:  " + usb205.RealValueOfAnalog0.ToString();
             label3.Text = "DIO0: " + CalculatedEncoderPosition.ToString();
+            label4.Text = "Próbek do wysłania: " + Globals.sampleList.Count.ToString();
         }
     }
 

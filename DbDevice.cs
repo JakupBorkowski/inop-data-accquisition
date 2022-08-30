@@ -11,13 +11,29 @@ namespace USB_205_DataAccquisition
 {
     internal class DbDevice
     {
+        public static MySqlConnection GetConnection()
+        {
+            string sql = Globals.sql;
+            MySqlConnection conn = new MySqlConnection(sql);
+            try
+            {
+                conn.Open();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("MySQL Connection! \n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return conn;
+        }
+
+
         //CREATE METHOD
         public static void AddDevice(Device device)
         {
             string sql = "INSERT INTO device VALUES (NULL, @DeviceName)";
 
-            Globals.conn = Globals.GetConnection();
-            MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
+            MySqlConnection conn = GetConnection();
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.Add("@DeviceName", MySqlDbType.VarChar).Value = device.name;
 
@@ -30,7 +46,7 @@ namespace USB_205_DataAccquisition
             {
                 MessageBox.Show("Student not insert! \n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            Globals.conn.Close();
+            conn.Close();
         }
 
         //UPDATE METHOD
@@ -38,8 +54,8 @@ namespace USB_205_DataAccquisition
         {
             string sql = "UPDATE device SET name = @DeviceName WHERE id_device = @DeviceId";
 
-            Globals.conn = Globals.GetConnection();
-            MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
+            MySqlConnection conn = GetConnection();
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.Add("@DeviceName", MySqlDbType.VarChar).Value = device.name;
             cmd.Parameters.Add("@DeviceId", MySqlDbType.VarChar).Value = id;
@@ -53,15 +69,15 @@ namespace USB_205_DataAccquisition
             {
                 MessageBox.Show("Device not updated! \n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            Globals.conn.Close();
+            conn.Close();
         }
 
         //DELETE METHOD
         public static void DeleteDevice(string id)
         {
             string sql = "DELETE FROM device WHERE id_device = @DeviceId";
-            Globals.conn = Globals.GetConnection();
-            MySqlCommand cmd = new MySqlCommand(sql, Globals.conn);
+            MySqlConnection conn = GetConnection();
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.Add("@DeviceId", MySqlDbType.VarChar).Value = id;
 
@@ -74,7 +90,7 @@ namespace USB_205_DataAccquisition
             {
                 MessageBox.Show("Device not deleted! \n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            Globals.conn.Close();
+            conn.Close();
 
         }
 
