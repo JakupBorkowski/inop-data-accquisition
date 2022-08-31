@@ -34,7 +34,7 @@ namespace USB_205_DataAccquisition
             MySqlConnection conn = GetConnection();
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.CommandType = CommandType.Text;
-            cmd.Parameters.Add("@ChannelId", MySqlDbType.VarChar).Value = sample.idChannel;
+            cmd.Parameters.Add("@ChannelId", MySqlDbType.Int32).Value = sample.idChannel;
             cmd.Parameters.Add("@Value", MySqlDbType.Float).Value = sample.value;
             cmd.Parameters.Add("@Timestamp", MySqlDbType.VarChar).Value = sample.timestamp;
 

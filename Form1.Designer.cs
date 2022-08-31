@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panelMenu = new System.Windows.Forms.Panel();
+            this.btnSessionParams = new System.Windows.Forms.Button();
             this.buttonStopOnLine = new System.Windows.Forms.Button();
             this.buttonCollectData = new System.Windows.Forms.Button();
             this.panelLogo = new System.Windows.Forms.Panel();
@@ -52,6 +53,7 @@
             // panelMenu
             // 
             this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
+            this.panelMenu.Controls.Add(this.btnSessionParams);
             this.panelMenu.Controls.Add(this.buttonStopOnLine);
             this.panelMenu.Controls.Add(this.buttonCollectData);
             this.panelMenu.Controls.Add(this.panelLogo);
@@ -60,6 +62,20 @@
             this.panelMenu.Name = "panelMenu";
             this.panelMenu.Size = new System.Drawing.Size(220, 561);
             this.panelMenu.TabIndex = 9;
+            // 
+            // btnSessionParams
+            // 
+            this.btnSessionParams.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnSessionParams.FlatAppearance.BorderSize = 0;
+            this.btnSessionParams.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSessionParams.ForeColor = System.Drawing.Color.White;
+            this.btnSessionParams.Location = new System.Drawing.Point(0, 240);
+            this.btnSessionParams.Name = "btnSessionParams";
+            this.btnSessionParams.Size = new System.Drawing.Size(220, 80);
+            this.btnSessionParams.TabIndex = 3;
+            this.btnSessionParams.Text = "Parametry sesji";
+            this.btnSessionParams.UseVisualStyleBackColor = true;
+            this.btnSessionParams.Click += new System.EventHandler(this.btnSessionParams_Click);
             // 
             // buttonStopOnLine
             // 
@@ -261,6 +277,7 @@
         private System.Windows.Forms.Button btnMinimized;
         private System.Windows.Forms.Button btnMaximize;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Button btnSessionParams;
     }
 }
 

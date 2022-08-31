@@ -34,11 +34,11 @@ namespace USB_205_DataAccquisition
             MySqlConnection conn = GetConnection();
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.CommandType = CommandType.Text;
-            cmd.Parameters.Add("@OrderId", MySqlDbType.Int32).Value = session.order_id;
+            cmd.Parameters.Add("@OrderId", MySqlDbType.VarChar).Value = session.nr_order;
             cmd.Parameters.Add("@Name", MySqlDbType.VarChar).Value = session.name;
             cmd.Parameters.Add("@Start", MySqlDbType.VarChar).Value = session.start;
             cmd.Parameters.Add("@NumberOfSamples", MySqlDbType.Int32).Value = session.numberOfSamples;
-            cmd.Parameters.Add("@Tp", MySqlDbType.Float).Value = session.tp;
+            cmd.Parameters.Add("@Tp", MySqlDbType.Double).Value = session.tp;
 
             try
             {

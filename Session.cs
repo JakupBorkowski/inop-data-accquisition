@@ -9,15 +9,15 @@ namespace USB_205_DataAccquisition
     internal class Session
     {
         public int idSession { get; }
-        public int order_id { get; set; }
+        public string nr_order{ get; set; }
         public string name { get; set; }    
         public string start { get; set; }
         public int numberOfSamples { get; set; }
-        public float tp { get; set; }
+        public double tp { get; set; }
 
-        public Session(int order_id, string name, string start, int numberOfSamples, float tp)
+        public Session(string nr_order, string name, string start, int numberOfSamples, double tp)
         {
-            this.order_id = order_id;   
+            this.nr_order = nr_order;   
             this.name = name;
             this.start = start;
             this.numberOfSamples = numberOfSamples;

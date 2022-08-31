@@ -74,13 +74,17 @@ namespace USB_205_DataAccquisition.Forms
                 string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
 
                 //utworzenie nowej sesji
-                Session session = new Session(3,"nowa", sqlFormattedDate, 1, (float)1.2);
-                DbSession.AddSession(session);
+                Session session = new Session(Globals.sessionSettings.nr_order,Globals.sessionSettings.name, sqlFormattedDate, Globals.sessionSettings.number_of_samples, Globals.sessionSettings.tp);   
+                Globals.sessionList.Add(session);
 
+
+                Sessionhaschannel sessionhaschannel_1 = new Sessionhaschannel(DbSession.LastSessionId(), 1);
+                Sessionhaschannel sessionhaschannel_2 = new Sessionhaschannel(DbSession.LastSessionId(), 9);
                 //TU jeszcze do przemyslenia (mozna zapisywac kilka wejs jako tabele json, to bedzie to bardziej logiczne).
-                DbSessionhaschannel.AddSessionhaschannel(DbSession.LastSessionId(), 1);
-                DbSessionhaschannel.AddSessionhaschannel(DbSession.LastSessionId(), 9);
+                Globals.sessionhaschannelsList.Add(sessionhaschannel_1);
+                Globals.sessionhaschannelsList.Add(sessionhaschannel_2);
 
+          
             }
             else if (button2.Text == "Zakoncz wysylanie probek do bazy danych")
             {
@@ -122,8 +126,9 @@ namespace USB_205_DataAccquisition.Forms
 
         private void FormDataCollector_Load(object sender, EventArgs e)
         {
+            Globals.sessionSettings = DbSessionSettings.SearchSessionSettings();
             timer1.Tick += timer1_Tick;
-            timer1.Interval = 100;
+            timer1.Interval = Globals.tp;
             //button1.Text = "Start";
 
             timer1.Start();
@@ -169,20 +174,12 @@ namespace USB_205_DataAccquisition.Forms
             // obliczone polozenie katowe enkodera
             CalculatedEncoderPosition = (float)CurrentNumberOfImpulses / NumberOfEncoderImpulses * 360;
 
-            //rysowanie wykresu dla wejścia analogowego CH0
-            chart1.Series[0].Points.AddXY(x, usb205.RealValueOfAnalog0);
 
-            //rysowanie wykresy dla wejscia cyfrowego DIO0-
-            chart1.Series[1].Points.AddXY(x, CalculatedEncoderPosition);
-
-
-            //ta czesc odpowiada ze przesuwanie wykresu w prawo
-            if (chart1.Series[0].Points.Count > 100)
-                chart1.Series[0].Points.RemoveAt(0);
-
-            chart1.ChartAreas[0].AxisX.Minimum = chart1.Series[0].Points[0].XValue;
-            chart1.ChartAreas[0].AxisX.Maximum = x;
-
+            //wyswietlanie tekstu w label2 i label3 dotyczącego aktualnego stanu  badanych wejść CHO i DIO0
+            label2.Text = "CH0:  " + usb205.RealValueOfAnalog0.ToString();
+            label3.Text = "DIO0: " + CalculatedEncoderPosition.ToString();
+            label4.Text = "Próbek do wysłania: " + Globals.sampleList.Count.ToString();
+            label5.Text = "Próbek wysłanych: " + Globals.sentSampleCounter.ToString();
 
             //ustawianie zakresu dla primary Y axis
             chart1.ChartAreas[0].AxisY.Minimum = 0;
@@ -199,6 +196,23 @@ namespace USB_205_DataAccquisition.Forms
             //ustawianie nazwy dla secondary osi Y
             chart1.ChartAreas[0].AxisY2.Title = "Ciśnienie";
 
+
+            //rysowanie wykresu dla wejścia analogowego CH0
+            chart1.Series[0].Points.AddXY(x, usb205.RealValueOfAnalog0);
+
+            //rysowanie wykresy dla wejscia cyfrowego DIO0-
+            chart1.Series[1].Points.AddXY(x, CalculatedEncoderPosition);
+
+
+            //ta czesc odpowiada ze przesuwanie wykresu w prawo
+            if (chart1.Series[0].Points.Count > 100)
+                chart1.Series[0].Points.RemoveAt(0);
+
+            chart1.ChartAreas[0].AxisX.Minimum = chart1.Series[0].Points[0].XValue;
+            chart1.ChartAreas[0].AxisX.Maximum = x;
+
+
+           
 
 
 
@@ -220,7 +234,7 @@ namespace USB_205_DataAccquisition.Forms
             }
 
 
-            if (button2.Text == "Zakoncz wysylanie probek do bazy danych")
+            if (button2.Text == "Zakoncz wysylanie probek do bazy danych" && Globals.sentSampleCounter < Globals.sessionSettings.number_of_samples)
             {
                 DateTime myDateTime = DateTime.Now;
                 string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
@@ -230,14 +244,20 @@ namespace USB_205_DataAccquisition.Forms
                 Sample sampleDIO0 = new Sample(9, (float)CalculatedEncoderPosition, sqlFormattedDate);
                 Globals.sampleList.Add(sampleCH0);
                 Globals.sampleList.Add(sampleDIO0);
-               
+                Globals.sentSampleCounter += Globals.numberOfUsedCanals/Globals.numberOfUsedCanals;
             }
 
+            if(Globals.sentSampleCounter>=Globals.sessionSettings.number_of_samples)
+            {
+                button2.Text = "Wyslij probki do bazy danych";
+                Globals.sentSampleCounter = 0;  
+            }
 
-            //wyswietlanie tekstu w label2 i label3 dotyczącego aktualnego stanu  badanych wejść CHO i DIO0
-            label2.Text = "CH0:  " + usb205.RealValueOfAnalog0.ToString();
-            label3.Text = "DIO0: " + CalculatedEncoderPosition.ToString();
-            label4.Text = "Próbek do wysłania: " + Globals.sampleList.Count.ToString();
+        }
+
+        private void chart1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

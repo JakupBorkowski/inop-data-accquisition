@@ -29,7 +29,7 @@ namespace USB_205_DataAccquisition
         //CREATE METHOD
         public static void AddSessionhaschannel(int sessionId, int channelId)
         {
-            string sql = "INSERT INTO session_has_channel VALUES (@SessionId, @ChannelId)";
+            string sql = "INSERT INTO session_has_channel VALUES ( @SessionId, @ChannelId,NULL)";
 
             MySqlConnection conn = GetConnection();
             MySqlCommand cmd = new MySqlCommand(sql, conn);
@@ -40,11 +40,11 @@ namespace USB_205_DataAccquisition
             try
             {
                 cmd.ExecuteNonQuery();
-                MessageBox.Show("Added Succesfully.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show("Added Succesfully.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Sample not inserted! \n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show("Session has channel  not inserted! \n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             conn.Close();
         }

@@ -13,6 +13,7 @@ using MindFusion.Charting.WinForms;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
+using MySqlX.XDevAPI;
 
 namespace USB_205_DataAccquisition
 {
@@ -24,11 +25,26 @@ namespace USB_205_DataAccquisition
         {
             while (true)
             {
-                if (Globals.sampleList.Count != 0)
+                if (Globals.sampleList.Count() != 0)
                 {
-                    DbSample.AddSample(Globals.sampleList[0]);
-                    Globals.sampleList.RemoveAt(0);
+                    if (Globals.sampleList[0] != null)
+                    {
+                        DbSample.AddSample(Globals.sampleList[0]);
+                        Globals.sampleList.RemoveAt(0);
+                    }
+                    //Thread.Sleep(Globals.tp);
                 }
+                if (Globals.sessionList.Count() != 0)
+                {
+                    DbSession.AddSession(Globals.sessionList[0]);
+                    Globals.sessionList.RemoveAt(0);
+                }
+                if (Globals.sessionhaschannelsList.Count() != 0)
+                {
+                    DbSessionhaschannel.AddSessionhaschannel(Globals.sessionhaschannelsList[0].idSession, Globals.sessionhaschannelsList[0].idChannel);
+                    Globals.sessionhaschannelsList.RemoveAt(0);
+                }
+
             }
         }
 
@@ -161,6 +177,10 @@ namespace USB_205_DataAccquisition
         {  
             OpenChildForm(new Forms.FormLineError(), sender);
         }
+        private void btnSessionParams_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new Forms.FormSessionParams(), sender);
+        }
 
         private void btnCloseChildForm_Click(object sender, EventArgs e)
         {
@@ -204,5 +224,7 @@ namespace USB_205_DataAccquisition
         {
             this.WindowState = FormWindowState.Minimized;
         }
+
+        
     }
 }
