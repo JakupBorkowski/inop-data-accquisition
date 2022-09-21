@@ -220,5 +220,15 @@ namespace USB_205_DataAccquisition
         {
             OpenChildForm(new Forms.Settings(), sender);
         }
+
+        private void panelDesktopPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

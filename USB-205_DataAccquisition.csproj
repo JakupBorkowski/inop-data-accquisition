@@ -273,6 +273,8 @@
     <None Include="Resources\refresh.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\logo_ster.png" />
+    <None Include="Resources\12345678.png" />
     <Content Include="Tpdkdesign.net-Refresh-Cl-System-Install-1.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USB-205_DataAccquisition", 
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "DataCollect", "..\DataCollect\DataCollect.vdproj", "{0D54F8DB-6110-4CA7-A528-146D3247A45D}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Ster-projekt", "..\Ster-projekt\Ster-projekt.vdproj", "{5BB7EBAF-A236-4B5A-9C13-75FED878D274}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,8 @@ Global
 		{09253FC0-497C-4380-BF8F-6D0A1D7142D9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0D54F8DB-6110-4CA7-A528-146D3247A45D}.Debug|Any CPU.ActiveCfg = Release
 		{0D54F8DB-6110-4CA7-A528-146D3247A45D}.Release|Any CPU.ActiveCfg = Release
+		{5BB7EBAF-A236-4B5A-9C13-75FED878D274}.Debug|Any CPU.ActiveCfg = Release
+		{5BB7EBAF-A236-4B5A-9C13-75FED878D274}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
