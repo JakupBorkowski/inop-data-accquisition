@@ -21,38 +21,38 @@ namespace USB_205_DataAccquisition
     public partial class Form1 : Form
     {
 
-        private void backgroundFunction()
-        {
-            while (true)
-            {
-                if (Globals.sampleList.Count() != 0)
-                {
-                    if (Globals.sampleList[0] != null)
-                    {
-                        DbSample.AddSample(Globals.sampleList[0]);
-                        Globals.sampleList.RemoveAt(0);
-                    }
-                    //Thread.Sleep(Globals.tp);
-                }
-                if (Globals.sessionList.Count() != 0)
-                {
-                    DbSession.AddSession(Globals.sessionList[0]);
-                    Globals.sessionList.RemoveAt(0);
-                }
-                if (Globals.sessionhaschannelsList.Count() != 0)
-                {
-                    DbSessionhaschannel.AddSessionhaschannel(Globals.sessionhaschannelsList[0].idSession, Globals.sessionhaschannelsList[0].idChannel);
-                    Globals.sessionhaschannelsList.RemoveAt(0);
-                }
-
-            }
-        }
+        
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Thread obj1 = new Thread(backgroundFunction);
-            obj1.IsBackground = true;
-            obj1.Start();
+            if(File.Exists("data.txt"))
+            {
+                string[] lines = File.ReadAllLines("data.txt");
+                Globals.maxPressure = Convert.ToDouble(lines[0]);
+                Globals.minPressure = Convert.ToDouble(lines[1]);
+                Globals.minReading = Convert.ToDouble(lines[2]);
+                Globals.maxReading = Convert.ToDouble(lines[3]);
+                Globals.numberOfEncoderImpulses = Convert.ToInt32(lines[4]);
+                Globals.usrednianieEnabled = Convert.ToBoolean(lines[5]);
+                Globals.numberOfSamples = Convert.ToInt32(lines[6]);
+            }
+            else
+            {
+                FileStream fs = File.Create("data.txt");
+                var sw = new StreamWriter(fs);
+                using (sw)
+                {
+                    sw.WriteLine( "100 \n" +  "0 \n" + "9,75 \n" + "0 \n" + "10000");
+                }
+                Globals.maxPressure = 100;
+                Globals.minPressure = 0;
+                Globals.maxReading = 9.75;
+                Globals.minReading = 0;
+                Globals.numberOfEncoderImpulses = 10000;
+                Globals.usrednianieEnabled = true;
+                Globals.numberOfSamples = 10;
+            }
+            
         }
 
         //Fields
@@ -69,7 +69,7 @@ namespace USB_205_DataAccquisition
             random = new Random();
             btnCloseChildForm.Visible = false;
             this.Text = String.Empty;
-            this.ControlBox = false;
+           // this.ControlBox = false;
             this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
 
             
@@ -173,15 +173,6 @@ namespace USB_205_DataAccquisition
             OpenChildForm(new Forms.FormDataCollector(),sender);
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {  
-            OpenChildForm(new Forms.FormLineError(), sender);
-        }
-        private void btnSessionParams_Click(object sender, EventArgs e)
-        {
-            OpenChildForm(new Forms.FormSessionParams(), sender);
-        }
-
         private void btnCloseChildForm_Click(object sender, EventArgs e)
         {
             if (activeForm != null)
@@ -225,6 +216,9 @@ namespace USB_205_DataAccquisition
             this.WindowState = FormWindowState.Minimized;
         }
 
-        
+        private void buttonSettings_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new Forms.Settings(), sender);
+        }
     }
 }

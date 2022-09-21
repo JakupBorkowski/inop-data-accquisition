@@ -30,8 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panelMenu = new System.Windows.Forms.Panel();
-            this.btnSessionParams = new System.Windows.Forms.Button();
-            this.buttonStopOnLine = new System.Windows.Forms.Button();
             this.buttonCollectData = new System.Windows.Forms.Button();
             this.panelLogo = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
@@ -43,6 +41,7 @@
             this.lblTitle = new System.Windows.Forms.Label();
             this.panelDesktopPanel = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.buttonSettings = new System.Windows.Forms.Button();
             this.panelMenu.SuspendLayout();
             this.panelLogo.SuspendLayout();
             this.panelTitleBar.SuspendLayout();
@@ -53,8 +52,7 @@
             // panelMenu
             // 
             this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
-            this.panelMenu.Controls.Add(this.btnSessionParams);
-            this.panelMenu.Controls.Add(this.buttonStopOnLine);
+            this.panelMenu.Controls.Add(this.buttonSettings);
             this.panelMenu.Controls.Add(this.buttonCollectData);
             this.panelMenu.Controls.Add(this.panelLogo);
             this.panelMenu.Dock = System.Windows.Forms.DockStyle.Left;
@@ -63,43 +61,15 @@
             this.panelMenu.Size = new System.Drawing.Size(220, 561);
             this.panelMenu.TabIndex = 9;
             // 
-            // btnSessionParams
-            // 
-            this.btnSessionParams.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnSessionParams.FlatAppearance.BorderSize = 0;
-            this.btnSessionParams.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSessionParams.ForeColor = System.Drawing.Color.White;
-            this.btnSessionParams.Location = new System.Drawing.Point(0, 240);
-            this.btnSessionParams.Name = "btnSessionParams";
-            this.btnSessionParams.Size = new System.Drawing.Size(220, 80);
-            this.btnSessionParams.TabIndex = 3;
-            this.btnSessionParams.Text = "Parametry sesji";
-            this.btnSessionParams.UseVisualStyleBackColor = true;
-            this.btnSessionParams.Click += new System.EventHandler(this.btnSessionParams_Click);
-            // 
-            // buttonStopOnLine
-            // 
-            this.buttonStopOnLine.Dock = System.Windows.Forms.DockStyle.Top;
-            this.buttonStopOnLine.FlatAppearance.BorderSize = 0;
-            this.buttonStopOnLine.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonStopOnLine.ForeColor = System.Drawing.Color.White;
-            this.buttonStopOnLine.Location = new System.Drawing.Point(0, 160);
-            this.buttonStopOnLine.Name = "buttonStopOnLine";
-            this.buttonStopOnLine.Size = new System.Drawing.Size(220, 80);
-            this.buttonStopOnLine.TabIndex = 2;
-            this.buttonStopOnLine.Text = "Przerwania na linii";
-            this.buttonStopOnLine.UseVisualStyleBackColor = true;
-            this.buttonStopOnLine.Click += new System.EventHandler(this.button3_Click);
-            // 
             // buttonCollectData
             // 
             this.buttonCollectData.Dock = System.Windows.Forms.DockStyle.Top;
             this.buttonCollectData.FlatAppearance.BorderSize = 0;
             this.buttonCollectData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonCollectData.ForeColor = System.Drawing.Color.White;
-            this.buttonCollectData.Location = new System.Drawing.Point(0, 80);
+            this.buttonCollectData.Location = new System.Drawing.Point(0, 39);
             this.buttonCollectData.Name = "buttonCollectData";
-            this.buttonCollectData.Size = new System.Drawing.Size(220, 80);
+            this.buttonCollectData.Size = new System.Drawing.Size(220, 38);
             this.buttonCollectData.TabIndex = 1;
             this.buttonCollectData.Text = "Zbieranie danych";
             this.buttonCollectData.UseVisualStyleBackColor = true;
@@ -112,7 +82,7 @@
             this.panelLogo.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelLogo.Location = new System.Drawing.Point(0, 0);
             this.panelLogo.Name = "panelLogo";
-            this.panelLogo.Size = new System.Drawing.Size(220, 80);
+            this.panelLogo.Size = new System.Drawing.Size(220, 39);
             this.panelLogo.TabIndex = 0;
             // 
             // label4
@@ -121,7 +91,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label4.ForeColor = System.Drawing.Color.LightGray;
-            this.label4.Location = new System.Drawing.Point(60, 28);
+            this.label4.Location = new System.Drawing.Point(60, 7);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(92, 20);
             this.label4.TabIndex = 0;
@@ -138,7 +108,7 @@
             this.panelTitleBar.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTitleBar.Location = new System.Drawing.Point(220, 0);
             this.panelTitleBar.Name = "panelTitleBar";
-            this.panelTitleBar.Size = new System.Drawing.Size(764, 80);
+            this.panelTitleBar.Size = new System.Drawing.Size(764, 39);
             this.panelTitleBar.TabIndex = 10;
             this.panelTitleBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelTitleBar_MouseDown);
             // 
@@ -155,6 +125,7 @@
             this.btnMinimized.TabIndex = 4;
             this.btnMinimized.Text = "O";
             this.btnMinimized.UseVisualStyleBackColor = true;
+            this.btnMinimized.Visible = false;
             this.btnMinimized.Click += new System.EventHandler(this.btnMinimized_Click);
             // 
             // btnMaximize
@@ -170,6 +141,7 @@
             this.btnMaximize.TabIndex = 3;
             this.btnMaximize.Text = "O";
             this.btnMaximize.UseVisualStyleBackColor = true;
+            this.btnMaximize.Visible = false;
             this.btnMaximize.Click += new System.EventHandler(this.btnMaximize_Click);
             // 
             // btnClose
@@ -185,6 +157,7 @@
             this.btnClose.TabIndex = 2;
             this.btnClose.Text = "O";
             this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Visible = false;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // btnCloseChildForm
@@ -196,7 +169,7 @@
             this.btnCloseChildForm.ForeColor = System.Drawing.Color.White;
             this.btnCloseChildForm.Location = new System.Drawing.Point(0, 0);
             this.btnCloseChildForm.Name = "btnCloseChildForm";
-            this.btnCloseChildForm.Size = new System.Drawing.Size(76, 80);
+            this.btnCloseChildForm.Size = new System.Drawing.Size(76, 39);
             this.btnCloseChildForm.TabIndex = 1;
             this.btnCloseChildForm.Text = "Menu";
             this.btnCloseChildForm.UseVisualStyleBackColor = true;
@@ -209,7 +182,7 @@
             this.lblTitle.BackColor = System.Drawing.Color.Transparent;
             this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lblTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTitle.Location = new System.Drawing.Point(311, 24);
+            this.lblTitle.Location = new System.Drawing.Point(311, 3);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(71, 26);
             this.lblTitle.TabIndex = 0;
@@ -221,22 +194,36 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelDesktopPanel.Controls.Add(this.pictureBox1);
-            this.panelDesktopPanel.Location = new System.Drawing.Point(220, 80);
+            this.panelDesktopPanel.Location = new System.Drawing.Point(220, 39);
             this.panelDesktopPanel.Name = "panelDesktopPanel";
-            this.panelDesktopPanel.Size = new System.Drawing.Size(764, 481);
+            this.panelDesktopPanel.Size = new System.Drawing.Size(764, 522);
             this.panelDesktopPanel.TabIndex = 11;
             // 
             // pictureBox1
             // 
             this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(226, 192);
+            this.pictureBox1.Location = new System.Drawing.Point(226, 213);
             this.pictureBox1.MinimumSize = new System.Drawing.Size(329, 57);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(329, 57);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            // 
+            // buttonSettings
+            // 
+            this.buttonSettings.Dock = System.Windows.Forms.DockStyle.Top;
+            this.buttonSettings.FlatAppearance.BorderSize = 0;
+            this.buttonSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSettings.ForeColor = System.Drawing.Color.White;
+            this.buttonSettings.Location = new System.Drawing.Point(0, 77);
+            this.buttonSettings.Name = "buttonSettings";
+            this.buttonSettings.Size = new System.Drawing.Size(220, 38);
+            this.buttonSettings.TabIndex = 2;
+            this.buttonSettings.Text = "Ustawienia";
+            this.buttonSettings.UseVisualStyleBackColor = true;
+            this.buttonSettings.Click += new System.EventHandler(this.buttonSettings_Click);
             // 
             // Form1
             // 
@@ -265,7 +252,6 @@
 
         #endregion
         private System.Windows.Forms.Panel panelMenu;
-        private System.Windows.Forms.Button buttonStopOnLine;
         private System.Windows.Forms.Button buttonCollectData;
         private System.Windows.Forms.Panel panelLogo;
         private System.Windows.Forms.Panel panelTitleBar;
@@ -277,7 +263,7 @@
         private System.Windows.Forms.Button btnMinimized;
         private System.Windows.Forms.Button btnMaximize;
         private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.Button btnSessionParams;
+        private System.Windows.Forms.Button buttonSettings;
     }
 }
 
