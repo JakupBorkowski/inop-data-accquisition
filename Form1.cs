@@ -42,7 +42,7 @@ namespace USB_205_DataAccquisition
                 var sw = new StreamWriter(fs);
                 using (sw)
                 {
-                    sw.WriteLine( "100 \n" +  "0 \n" + "9,75 \n" + "0 \n" + "10000");
+                    sw.WriteLine( "100 \n" +  "0 \n" + "0 \n" + "9,75 \n" + "10000");
                 }
                 Globals.maxPressure = 100;
                 Globals.minPressure = 0;

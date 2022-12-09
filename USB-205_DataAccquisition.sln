@@ -7,7 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USB-205_DataAccquisition", 
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "DataCollect", "..\DataCollect\DataCollect.vdproj", "{0D54F8DB-6110-4CA7-A528-146D3247A45D}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Ster-projekt", "..\Ster-projekt\Ster-projekt.vdproj", "{5BB7EBAF-A236-4B5A-9C13-75FED878D274}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Ster-projekt-Maciej-Pijanowski", "..\Ster-projekt-Maciej-Pijanowski\Ster-projekt-Maciej-Pijanowski.vdproj", "{7CDAAD4B-BCBF-4010-B8BB-2310C9C97867}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Ster-projekt-M-Pijanowski", "..\Ster-projekt-M-Pijanowski\Ster-projekt-M-Pijanowski.vdproj", "{AA59A658-2B5C-455B-B887-B8286EB850A5}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Ster-projekt-Maciej_Pijanowski", "..\Ster-projekt-Maciej_Pijanowski\Ster-projekt-Maciej_Pijanowski.vdproj", "{4FE6E469-D488-45A1-B3BA-630E1A9FD868}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +25,12 @@ Global
 		{09253FC0-497C-4380-BF8F-6D0A1D7142D9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0D54F8DB-6110-4CA7-A528-146D3247A45D}.Debug|Any CPU.ActiveCfg = Release
 		{0D54F8DB-6110-4CA7-A528-146D3247A45D}.Release|Any CPU.ActiveCfg = Release
-		{5BB7EBAF-A236-4B5A-9C13-75FED878D274}.Debug|Any CPU.ActiveCfg = Release
-		{5BB7EBAF-A236-4B5A-9C13-75FED878D274}.Release|Any CPU.ActiveCfg = Release
+		{7CDAAD4B-BCBF-4010-B8BB-2310C9C97867}.Debug|Any CPU.ActiveCfg = Release
+		{7CDAAD4B-BCBF-4010-B8BB-2310C9C97867}.Release|Any CPU.ActiveCfg = Release
+		{AA59A658-2B5C-455B-B887-B8286EB850A5}.Debug|Any CPU.ActiveCfg = Release
+		{AA59A658-2B5C-455B-B887-B8286EB850A5}.Release|Any CPU.ActiveCfg = Release
+		{4FE6E469-D488-45A1-B3BA-630E1A9FD868}.Debug|Any CPU.ActiveCfg = Release
+		{4FE6E469-D488-45A1-B3BA-630E1A9FD868}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -184,9 +184,8 @@ namespace USB_205_DataAccquisition.Forms
             }
            
             //wyswietlanie tekstu w label2 i label3 dotyczącego aktualnego stanu  badanych wejść CHO i DIO0
-            label2.Text = "CH0:  " + normalizedPressure;
-            label3.Text = "DIO0: " + CalculatedEncoderPosition.ToString();
-            label5.Text = count.ToString();
+            label2.Text = "CIŚ [CH0]:  " + normalizedPressure;
+            label3.Text = " POŁ ENKO [DIO0]: " + CalculatedEncoderPosition.ToString();
             //ustawianie zakresu dla primary Y axis
             chart1.ChartAreas[0].AxisY.Minimum = 0;
             chart1.ChartAreas[0].AxisY.Maximum = 360;
@@ -265,6 +264,11 @@ namespace USB_205_DataAccquisition.Forms
         }
 
         private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
         {
 
         }
